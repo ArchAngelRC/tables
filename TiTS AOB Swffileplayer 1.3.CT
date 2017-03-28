@@ -1,0 +1,1256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="24">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>8</ID>
+      <Description>"_credits base pointer"</Description>
+      <VariableType>Double</VariableType>
+      <Address>_credits</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>53</ID>
+      <Description>"Activate"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{
+AOBscan for the personal stats
+
+This one is always located above the credits.
+Scroll up past the long block of pointers, and right after that are ~4 lines of 00 00.
+After those 4 lines starts the 4 rows of AOB which this one is.
+Should always start with ?8 ?8 ?? ?? F? 7F
+
+Memory viewer extended to show 16 bytes per row ofc.
+}
+aobscan(credits, ?8 ?? ?? ?? F? 7F 00 00 02 00 00 20 00 00 00 00 ?? ?0 ?? ?? ?? 0? 00 00 ?? ?? ?? ?? ?? 0? 00 00 02 00 00 00 02 00 00 00 00 00 00 00 00 00 00 00 ?? ?? ?? ?? ?? 0?)
+label(_credits)
+registersymbol(_credits)
+
+credits:
+_credits:
+
+[DISABLE]
+unregistersymbol(_credits)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>54</ID>
+          <Description>"Combat Stats"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>75</ID>
+              <Description>"Shield"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>_credits+58</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>74</ID>
+              <Description>"HP"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>_credits+50</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>60</ID>
+              <Description>"Lust"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+330</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>62</ID>
+              <Description>"Energy"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+340</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>157</ID>
+                  <Description>"Maximum Energy (Value + 100)"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+348</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>67</ID>
+          <Description>"Core Stats"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>68</ID>
+              <Description>"Physique"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+2c8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>69</ID>
+              <Description>"Reflexes"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+2D0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>70</ID>
+              <Description>"Aim"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+2D8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>71</ID>
+              <Description>"Intelligence"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+2E0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>72</ID>
+              <Description>"Willpower"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+2E8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>73</ID>
+              <Description>"Libido"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+2F0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>183</ID>
+              <Description>"Stats Bonuses"</Description>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>164</ID>
+                  <Description>"Physique Bonus"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+2F8</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>163</ID>
+                  <Description>"Reflexes Bonus"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+300</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>162</ID>
+                  <Description>"Aim Bonus"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+308</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>161</ID>
+                  <Description>"Intelligence Bonus"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+310</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>160</ID>
+                  <Description>"Willpower Bonus"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+318</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>159</ID>
+                  <Description>"Libido Bonus"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+320</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>63</ID>
+          <Description>"Advancement"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>64</ID>
+              <Description>"Level"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+368</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>65</ID>
+              <Description>"XP"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+360</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>66</ID>
+              <Description>"Credits"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+370</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>184</ID>
+          <Description>"Profile"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>178</ID>
+              <Description>"Occupation"</Description>
+              <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">0:Smuggler
+1:Mercenary
+2:Tech Specialist
+</DropDownList>
+              <VariableType>Byte</VariableType>
+              <Address>_credits+48</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>79</ID>
+              <Description>"Weight (Not accurate - Try around)"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+390</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>80</ID>
+              <Description>"Gender Alignment"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+380</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>188</ID>
+                  <Description>"0&lt;-Masculinity | Femininity -&gt;100"</Description>
+                  <LastState Value="" RealAddress="00000000"/>
+                  <Color>888888</Color>
+                  <GroupHeader>1</GroupHeader>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>158</ID>
+              <Description>"Exhibitionism"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+328</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>186</ID>
+          <Description>"Head"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>88</ID>
+              <Description>"Face"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+3D8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>84</ID>
+              <Description>"Beard Type"</Description>
+              <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">0:Nothing
+1:Feathers
+2:Transparent
+3:Gooey
+4:Tentacles
+5:Quills
+6:Plant
+</DropDownList>
+              <VariableType>Double</VariableType>
+              <Address>_credits+3B8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>85</ID>
+              <Description>"Beard Length"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+3C0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>177</ID>
+              <Description>"Neck"</Description>
+              <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">0:Nothing
+1:Gills
+</DropDownList>
+              <VariableType>Byte</VariableType>
+              <Address>_credits+60</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>83</ID>
+              <Description>"Hair Type"</Description>
+              <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">0:Hair
+1:Feathers
+2:Transparent
+3:Gooey
+4:Tentacles
+5:Quills
+6:Plant
+</DropDownList>
+              <VariableType>Double</VariableType>
+              <Address>_credits+3B0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>82</ID>
+              <Description>"Hair Length"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+3A8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>93</ID>
+              <Description>"Antennae Count"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+400</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>94</ID>
+              <Description>"Antennae Type"</Description>
+              <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">0:None
+1:Equine
+2:Bovine
+3:Canine
+4:Feline
+5:Vulpine
+6:Bee
+7:Arachnid
+8:Drider
+9:Lapine
+10:Avian
+11:Draconic
+12:Lizan
+13:Naga
+14:Frog
+15:Demonic
+16:Gooey
+17:Kangaroo
+18:Gabilani
+19:Shark
+20:Suula
+21:Deer
+22:Anemone
+23:Tentacle
+24:Kui-tan
+25:Human Masked
+26:Mouse
+27:Mouseman
+28:Dove
+29:Floppy Dog
+30:Dryad
+31:Dragonfly
+32:MLP
+33:Cuntsnake
+34:Venus Pitcher
+35:Succubus
+36:Small Bee
+37:Small Demonic
+38:Small Draconic
+39:Naleen
+40:Panda
+41:Mimbrane
+42:Raskvel
+43:Sydian
+44:Lapinara
+45:Badger
+46:Vanae
+47:Vanae Maiden
+48:Vanae Huntress
+49:Leithan
+50:Goat
+51:Synthetic
+52:Simii
+53:Daynar
+54:Cockvine
+55:Nyrea
+56:Inhuman
+57:Ovir
+58:Sylvan
+59:Dark Sylvan
+60:Myr
+61:Saurian
+62:Rhino
+63:Narwhal
+64:Hradian
+65:Gryvain
+66:Korgonne
+67:Flower
+68:Water Queen
+69:Bothrioc
+70:Milodan
+71:Worg
+72:Swine
+</DropDownList>
+              <VariableType>Double</VariableType>
+              <Address>_credits+408</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>91</ID>
+              <Description>"Ears"</Description>
+              <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">0:Human
+1:Equine
+2:Bovine
+3:Canine
+4:Feline
+5:Vulpine
+6:Bee
+7:Arachnid
+8:Drider
+9:Lapine
+10:Avian
+11:Draconic
+12:Lizan
+13:Naga
+14:Frog
+15:Demonic
+16:Gooey
+17:Kangaroo
+18:Gabilani
+19:Shark
+20:Suula
+21:Deer
+22:Anemone
+23:Tentacle
+24:Kui-tan
+25:Human Masked
+26:Mouse
+27:Mouseman
+28:Dove
+29:Floppy Dog
+30:Dryad
+31:Dragonfly
+32:MLP
+33:Cuntsnake
+34:Venus Pitcher
+35:Succubus
+36:Small Bee
+37:Small Demonic
+38:Small Draconic
+39:Naleen
+40:Panda
+41:Mimbrane
+42:Raskvel
+43:Sydian
+44:Lapinara
+45:Badger
+46:Vanae
+47:Vanae Maiden
+48:Vanae Huntress
+49:Leithan
+50:Goat
+51:Synthetic
+52:Simii
+53:Daynar
+54:Cockvine
+55:Nyrea
+56:Inhuman
+57:Ovir
+58:Sylvan
+59:Dark Sylvan
+60:Myr
+61:Saurian
+62:Rhino
+63:Narwhal
+64:Hradian
+65:Gryvain
+66:Korgonne
+67:Flower
+68:Water Queen
+69:Bothrioc
+70:Milodan
+71:Worg
+72:Swine
+</DropDownList>
+              <VariableType>Double</VariableType>
+              <Address>_credits+3F0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>92</ID>
+              <Description>"Ears Size"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+3F8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>118</ID>
+              <Description>"[NO CLUE] Ear Piercing"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+4C8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117</ID>
+              <Description>"[NO CLUE] Eyebrow Piercing"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+4C0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>119</ID>
+              <Description>"[NO CLUE] Nose Piercing"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+4D0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>90</ID>
+              <Description>"Lip Size"</Description>
+              <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">0:Pencil-thin
+1:Supple
+2:Plump
+3:Luscious
+4:Bee-stung
+5:Fat
+6:Bloated
+7:Whorish
+8:Universe-distorting
+</DropDownList>
+              <VariableType>Double</VariableType>
+              <Address>_credits+3E8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>115</ID>
+              <Description>"[NO CLUE] Lip Accent"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+4B0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>89</ID>
+              <Description>"Tongue Type"</Description>
+              <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">0:Human
+1:Equine
+2:Bovine
+3:Canine
+4:Feline
+5:Vulpine
+6:Bee
+7:Arachnid
+8:Drider
+9:Lapine
+10:Avian
+11:Draconic
+12:Lizan
+13:Naga
+14:Frog
+15:Demonic
+16:Gooey
+17:Kangaroo
+18:Gabilani
+19:Shark
+20:Suula
+21:Deer
+22:Anemone
+23:Tentacle
+24:Kui-tan
+25:Human Masked
+26:Mouse
+27:Mouseman
+28:Dove
+29:Floppy Dog
+30:Dryad
+31:Dragonfly
+32:MLP
+33:Cuntsnake
+34:Venus Pitcher
+35:Succubus
+36:Small Bee
+37:Small Demonic
+38:Small Draconic
+39:Naleen
+40:Panda
+41:Mimbrane
+42:Raskvel
+43:Sydian
+44:Lapinara
+45:Badger
+46:Vanae
+47:Vanae Maiden
+48:Vanae Huntress
+49:Leithan
+50:Goat
+51:Synthetic
+52:Simii
+53:Daynar
+54:Cockvine
+55:Nyrea
+56:Inhuman
+57:Ovir
+58:Sylvan
+59:Dark Sylvan
+60:Myr
+61:Saurian
+62:Rhino
+63:Narwhal
+64:Hradian
+65:Gryvain
+66:Korgonne
+67:Flower
+68:Water Queen
+69:Bothrioc
+70:Milodan
+71:Worg
+72:Swine
+</DropDownList>
+              <VariableType>Double</VariableType>
+              <Address>_credits+3E0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116</ID>
+              <Description>"[NO CLUE] Tongue Piercing"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+4B8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>95</ID>
+              <Description>"Horn count"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+410</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>96</ID>
+              <Description>"Horn Type"</Description>
+              <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">0:Human
+1:Equine
+2:Bovine
+3:Canine
+4:Feline
+5:Vulpine
+6:Bee
+7:Arachnid
+8:Drider
+9:Lapine
+10:Avian
+11:Draconic
+12:Lizan
+13:Naga
+14:Frog
+15:Demonic
+16:Gooey
+17:Kangaroo
+18:Gabilani
+19:Shark
+20:Suula
+21:Deer
+22:Anemone
+23:Tentacle
+24:Kui-tan
+25:Human Masked
+26:Mouse
+27:Mouseman
+28:Dove
+29:Floppy Dog
+30:Dryad
+31:Dragonfly
+32:MLP
+33:Cuntsnake
+34:Venus Pitcher
+35:Succubus
+36:Small Bee
+37:Small Demonic
+38:Small Draconic
+39:Naleen
+40:Panda
+41:Mimbrane
+42:Raskvel
+43:Sydian
+44:Lapinara
+45:Badger
+46:Vanae
+47:Vanae Maiden
+48:Vanae Huntress
+49:Leithan
+50:Goat
+51:Synthetic
+52:Simii
+53:Daynar
+54:Cockvine
+55:Nyrea
+56:Inhuman
+57:Ovir
+58:Sylvan
+59:Dark Sylvan
+60:Myr
+61:Saurian
+62:Rhino
+63:Narwhal
+64:Hradian
+65:Gryvain
+66:Korgonne
+67:Flower
+68:Water Queen
+69:Bothrioc
+70:Milodan
+71:Worg
+72:Swine
+</DropDownList>
+              <VariableType>Double</VariableType>
+              <Address>_credits+418</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>97</ID>
+              <Description>"Horn Length"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+420</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>185</ID>
+          <Description>"Chest"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>175</ID>
+              <Description>"Nipple Count (1Unit =2Nipples)"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>_credits+70</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>196</ID>
+          <Description>"Breasts"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>114</ID>
+              <Description>"Nipple Piercing"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+4A8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>131</ID>
+              <Description>"Nipple Length"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+530</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>132</ID>
+              <Description>"Areola Width"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+538</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>133</ID>
+              <Description>"Milk Production Training %"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+540</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>134</ID>
+              <Description>"Milk Type"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+548</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>135</ID>
+              <Description>"Milk Max Multiplier"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+550</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>136</ID>
+              <Description>"Milk Capacity %"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+558</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>137</ID>
+              <Description>"Milk Production Bonus %  (1Unit =10%)"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+560</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>189</ID>
+          <Description>"Body"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>78</ID>
+              <Description>"Tone"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+3A0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>77</ID>
+              <Description>"Thickness"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+398</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>87</ID>
+              <Description>"Skin Type"</Description>
+              <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">0:Skin
+1:Fur
+2:Scales
+3:Goo
+4:Chitin
+5:Feathers
+6:Latex
+7:Plant
+8:Bark
+</DropDownList>
+              <VariableType>Double</VariableType>
+              <Address>_credits+3D0</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>191</ID>
+          <Description>"Limbs (Arms, Legs, Tails, etc)"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>192</ID>
+              <Description>"Arms"</Description>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>98</ID>
+                  <Description>"Arm Type"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+428</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>193</ID>
+              <Description>"Legs"</Description>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>101</ID>
+                  <Description>"Leg Type"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+440</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>102</ID>
+                  <Description>"Leg count"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+448</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>194</ID>
+              <Description>"Tails"</Description>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>105</ID>
+                  <Description>"Tail Type"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+460</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>106</ID>
+                  <Description>"Tail count"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+468</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>195</ID>
+              <Description>"Back"</Description>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>100</ID>
+                  <Description>"Back Type"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+438</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>99</ID>
+                  <Description>"Back count"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+430</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>201</ID>
+          <Description>"Belly"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>152</ID>
+              <Description>"Belly size"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+5D8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>203</ID>
+              <Description>"Belly Size Base ?"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+5D0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>202</ID>
+              <Description>"Belly Size ?"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+5C8</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>200</ID>
+          <Description>"Hip + Butt"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>110</ID>
+              <Description>"Hip Size"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+488</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111</ID>
+              <Description>"Hip Size Base ?"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+490</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112</ID>
+              <Description>"Butt Size"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+498</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>113</ID>
+              <Description>"Butt Size base ?"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+4A0</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>197</ID>
+          <Description>"Genitalia + Modifiers"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>198</ID>
+              <Description>"Penis + Testicles"</Description>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>120</ID>
+                  <Description>"Testicle Count"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+4D8</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>121</ID>
+                  <Description>"Testicle Size"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+4E0</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>122</ID>
+                  <Description>"Testicle Size 2 ?"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+4E8</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>199</ID>
+              <Description>"Vagina"</Description>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>128</ID>
+                  <Description>"Clitoris Length"</Description>
+                  <VariableType>Double</VariableType>
+                  <Address>_credits+518</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>104</ID>
+              <Description>"Genital Location"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+458</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>123</ID>
+              <Description>"Cum Capacity %"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+4F0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>124</ID>
+              <Description>"Cum Type"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+4F8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>103</ID>
+              <Description>"Cum Type"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+450</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>125</ID>
+              <Description>"Refractory Rate % (1Unit =100%)"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+500</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>127</ID>
+              <Description>"Orgasms"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+510</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>129</ID>
+              <Description>"Genital Elasticity"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+520</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>142</ID>
+              <Description>"Virility Speed Modifier % (1Unit=100%)"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+588</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>143</ID>
+              <Description>"Virility Speed Modifier % (1Unit=100%) Base ?"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+590</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>144</ID>
+              <Description>"Fertility Quantity Bonus"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+598</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>145</ID>
+              <Description>"Fertility Quantity Bonus Base ?"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+5A0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>146</ID>
+              <Description>"Fertility % (1Unit=100%)"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+5B8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>147</ID>
+              <Description>"Fertility % (1Unit=100%) Base ?"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+5C0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>148</ID>
+              <Description>"Fertility Speed Modifier % (1Unit=100%)"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+5C8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>149</ID>
+              <Description>"Fertility Speed Modifier % (1Unit=100%) Base ?"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+5D0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>130</ID>
+              <Description>"Girlcum Type"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+528</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>140</ID>
+              <Description>"Girlcum propable ejaculation"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+578</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>141</ID>
+              <Description>"Girlcum propable ejaculation base ?"</Description>
+              <VariableType>Double</VariableType>
+              <Address>_credits+580</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>190</ID>
+      <Description>"UNCATEGORIZED"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Value="" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>182</ID>
+          <Description>"? CRASHES THE GAME"</Description>
+          <VariableType>Byte</VariableType>
+          <Address>_credits+28</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>181</ID>
+          <Description>"? CRASHES THE GAME"</Description>
+          <VariableType>Byte</VariableType>
+          <Address>_credits+30</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>180</ID>
+          <Description>"?"</Description>
+          <VariableType>Byte</VariableType>
+          <Address>_credits+38</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>179</ID>
+          <Description>"?"</Description>
+          <VariableType>Byte</VariableType>
+          <Address>_credits+40</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>176</ID>
+          <Description>"?"</Description>
+          <VariableType>Byte</VariableType>
+          <Address>_credits+68</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>174</ID>
+          <Description>"?"</Description>
+          <VariableType>Byte</VariableType>
+          <Address>_credits+78</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>173</ID>
+          <Description>"?"</Description>
+          <VariableType>Byte</VariableType>
+          <Address>_credits+80</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>172</ID>
+          <Description>"?"</Description>
+          <VariableType>Byte</VariableType>
+          <Address>_credits+88</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>166</ID>
+          <Description>"?"</Description>
+          <VariableType>Double</VariableType>
+          <Address>_credits+2B8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>165</ID>
+          <Description>"?"</Description>
+          <VariableType>Double</VariableType>
+          <Address>_credits+2C0</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>156</ID>
+          <Description>"?"</Description>
+          <VariableType>Double</VariableType>
+          <Address>_credits+350</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>155</ID>
+          <Description>"?"</Description>
+          <VariableType>Double</VariableType>
+          <Address>_credits+358</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>154</ID>
+          <Description>"?"</Description>
+          <VariableType>Double</VariableType>
+          <Address>_credits+378</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>86</ID>
+          <Description>"?"</Description>
+          <VariableType>Double</VariableType>
+          <Address>_credits+3C8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>107</ID>
+          <Description>"?"</Description>
+          <VariableType>Double</VariableType>
+          <Address>_credits+470</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>108</ID>
+          <Description>"?"</Description>
+          <VariableType>Double</VariableType>
+          <Address>_credits+478</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>109</ID>
+          <Description>"?"</Description>
+          <VariableType>Double</VariableType>
+          <Address>_credits+480</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>126</ID>
+          <Description>"?"</Description>
+          <VariableType>Double</VariableType>
+          <Address>_credits+508</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>138</ID>
+          <Description>"?"</Description>
+          <VariableType>Double</VariableType>
+          <Address>_credits+568</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>139</ID>
+          <Description>"?"</Description>
+          <VariableType>Double</VariableType>
+          <Address>_credits+570</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>153</ID>
+          <Description>"?"</Description>
+          <VariableType>Double</VariableType>
+          <Address>_credits+5F0</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_credits2</Name>
+      <Address>42DA1A47BD6</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_combat</Name>
+      <Address>2D163A170A2</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_credits</Name>
+      <Address>42BB291D0A0</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+</CheatTable>
