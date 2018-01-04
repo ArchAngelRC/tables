@@ -81,7 +81,7 @@ dealloc(newmem)
     </CheatEntry>
     <CheatEntry>
       <ID>12</ID>
-      <Description>"Keep Health at 40 (edit in script)"</Description>
+      <Description>"(WiP) Keep Health at 40 (edit in script)"</Description>
       <LastState Activated="1"/>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{ Game   : LAB2UG_ver_1_04.exe
