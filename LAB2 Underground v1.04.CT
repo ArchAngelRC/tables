@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Inf Ammo"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : LAB2UG_ver_1_04.exe
+  Version: 
+  Date   : 2017-12-24
+  Author : LustWolf
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+define(aobgun,LAB2UG_ver_1_04.exe+116A6)
+//aobscanmodule(aobgun,LAB2UG_ver_1_04.exe,29 50 08 5D C3 CC CC CC CC CC 55) // should be unique
+alloc(newmem,$1000)
+globalalloc(_gun,8)
+
+label(code)
+label(return)
+
+newmem:
+  pushf
+  cmp [eax+00a8],0
+  je code
+  mov [_gun],eax
+code:
+  popf
+  sub [eax+08],0 //edx
+  pop ebp
+  ret
+  jmp return
+
+aobgun:
+  jmp newmem
+return:
+registersymbol(aobgun)
+
+[DISABLE]
+
+aobgun:
+  db 29 50 08 5D C3
+
+unregistersymbol(aobgun)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "LAB2UG_ver_1_04.exe"+116A6
+
+"LAB2UG_ver_1_04.exe"+11687: 74 1D              -  je LAB2UG_ver_1_04.exe+116A6
+"LAB2UG_ver_1_04.exe"+11689: 83 E9 02           -  sub ecx,02
+"LAB2UG_ver_1_04.exe"+1168C: 75 1B              -  jne LAB2UG_ver_1_04.exe+116A9
+"LAB2UG_ver_1_04.exe"+1168E: F2 0F 10 48 08     -  movsd xmm1,[eax+08]
+"LAB2UG_ver_1_04.exe"+11693: 66 0F 6E C2        -  movd xmm0,edx
+"LAB2UG_ver_1_04.exe"+11697: F3 0F E6 C0        -  cvtdq2pd xmm0,xmm0
+"LAB2UG_ver_1_04.exe"+1169B: F2 0F 5C C8        -  subsd xmm1,xmm0
+"LAB2UG_ver_1_04.exe"+1169F: F2 0F 11 48 08     -  movsd [eax+08],xmm1
+"LAB2UG_ver_1_04.exe"+116A4: 5D                 -  pop ebp
+"LAB2UG_ver_1_04.exe"+116A5: C3                 -  ret 
+// ---------- INJECTING HERE ----------
+"LAB2UG_ver_1_04.exe"+116A6: 29 50 08           -  sub [eax+08],edx
+"LAB2UG_ver_1_04.exe"+116A9: 5D                 -  pop ebp
+"LAB2UG_ver_1_04.exe"+116AA: C3                 -  ret 
+// ---------- DONE INJECTING  ----------
+"LAB2UG_ver_1_04.exe"+116AB: CC                 -  int 3 
+"LAB2UG_ver_1_04.exe"+116AC: CC                 -  int 3 
+"LAB2UG_ver_1_04.exe"+116AD: CC                 -  int 3 
+"LAB2UG_ver_1_04.exe"+116AE: CC                 -  int 3 
+"LAB2UG_ver_1_04.exe"+116AF: CC                 -  int 3 
+"LAB2UG_ver_1_04.exe"+116B0: 55                 -  push ebp
+"LAB2UG_ver_1_04.exe"+116B1: 8B EC              -  mov ebp,esp
+"LAB2UG_ver_1_04.exe"+116B3: 8B 0D CC 39 2D 01  -  mov ecx,[LAB2UG_ver_1_04.exe+B39CC]
+"LAB2UG_ver_1_04.exe"+116B9: 56                 -  push esi
+"LAB2UG_ver_1_04.exe"+116BA: 8B 75 08           -  mov esi,[ebp+08]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>12</ID>
+      <Description>"Keep Health at 40 (edit in script)"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : LAB2UG_ver_1_04.exe
+  Version: 
+  Date   : 2018-01-03
+  Author : LustWolf
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+define(readHealth,LAB2UG_ver_1_04.exe+73AE)
+//aobscanmodule(readHealth,LAB2UG_ver_1_04.exe,66 0F 6E 49 08 F3 0F E6 C9 83) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+  mov [ecx+08],#40 //Writes value of 40 decimal to health
+code:
+  movd xmm1,[ecx+08]
+  jmp return
+
+readHealth:
+  jmp newmem
+return:
+registersymbol(readHealth)
+
+[DISABLE]
+
+readHealth:
+  db 66 0F 6E 49 08
+
+unregistersymbol(readHealth)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "LAB2UG_ver_1_04.exe"+73AE
+
+"LAB2UG_ver_1_04.exe"+7391: 8B 49 08              -  mov ecx,[ecx+08]
+"LAB2UG_ver_1_04.exe"+7394: 33 C0                 -  xor eax,eax
+"LAB2UG_ver_1_04.exe"+7396: 3B 4A 08              -  cmp ecx,[edx+08]
+"LAB2UG_ver_1_04.exe"+7399: 0F 9F C0              -  setg al
+"LAB2UG_ver_1_04.exe"+739C: 8B E5                 -  mov esp,ebp
+"LAB2UG_ver_1_04.exe"+739E: 5D                    -  pop ebp
+"LAB2UG_ver_1_04.exe"+739F: C2 08 00              -  ret 0008
+"LAB2UG_ver_1_04.exe"+73A2: 83 F8 02              -  cmp eax,02
+"LAB2UG_ver_1_04.exe"+73A5: 0F 85 90 02 00 00     -  jne LAB2UG_ver_1_04.exe+763B
+"LAB2UG_ver_1_04.exe"+73AB: 8B 45 0C              -  mov eax,[ebp+0C]
+// ---------- INJECTING HERE ----------
+"LAB2UG_ver_1_04.exe"+73AE: 66 0F 6E 49 08        -  movd xmm1,[ecx+08]
+// ---------- DONE INJECTING  ----------
+"LAB2UG_ver_1_04.exe"+73B3: F3 0F E6 C9           -  cvtdq2pd xmm1,xmm1
+"LAB2UG_ver_1_04.exe"+73B7: 83 F8 05              -  cmp eax,05
+"LAB2UG_ver_1_04.exe"+73BA: 0F 87 7B 02 00 00     -  ja LAB2UG_ver_1_04.exe+763B
+"LAB2UG_ver_1_04.exe"+73C0: FF 24 85 5C 76 3E 01  -  jmp dword ptr [eax*4+LAB2UG_ver_1_04.exe+765C]
+"LAB2UG_ver_1_04.exe"+73C7: 66 0F 2E 4A 08        -  ucomisd xmm1,[edx+08]
+"LAB2UG_ver_1_04.exe"+73CC: 9F                    -  lahf 
+"LAB2UG_ver_1_04.exe"+73CD: F6 C4 44              -  test ah,44
+"LAB2UG_ver_1_04.exe"+73D0: 0F 8A 65 02 00 00     -  jp LAB2UG_ver_1_04.exe+763B
+"LAB2UG_ver_1_04.exe"+73D6: B8 01 00 00 00        -  mov eax,00000001
+"LAB2UG_ver_1_04.exe"+73DB: 8B E5                 -  mov esp,ebp
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_gun</Name>
+      <Address>013C0000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+  <Comments>Info about this table:
+</Comments>
+</CheatTable>
