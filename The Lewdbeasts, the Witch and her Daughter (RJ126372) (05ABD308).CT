@@ -3,22 +3,29 @@
   <CheatEntries>
     <CheatEntry>
       <ID>14</ID>
-      <Description>"money"</Description>
-      <LastState Value="502" Activated="1" RealAddress="01354B20"/>
+      <Description>"money battle"</Description>
+      <LastState Value="2913" Activated="1" RealAddress="01354B20"/>
       <VariableType>4 Bytes</VariableType>
       <Address>sonomusume.exe+74B20</Address>
     </CheatEntry>
     <CheatEntry>
+      <ID>16</ID>
+      <Description>"money menu"</Description>
+      <LastState Value="9913" Activated="1" RealAddress="013534A8"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>sonomusume.exe+734A8</Address>
+    </CheatEntry>
+    <CheatEntry>
       <ID>15</ID>
       <Description>"house"</Description>
-      <LastState Value="9" Activated="1" RealAddress="01354B24"/>
+      <LastState Value="35" Activated="1" RealAddress="01354B24"/>
       <VariableType>4 Bytes</VariableType>
       <Address>sonomusume.exe+74B24</Address>
     </CheatEntry>
     <CheatEntry>
       <ID>10</ID>
-      <Description>"hp always full"</Description>
-      <LastState Activated="1"/>
+      <Description>"hp always 50"</Description>
+      <LastState/>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{ Game   : sonomusume.exe (paused)
   Version: 
@@ -37,7 +44,7 @@ label(code)
 label(return)
 
 newmem:
-  mov [esi+0000008C],#50
+  mov [esi+0000008C],#50  //set to lower value to increase grapple speed
 code:
   fild dword ptr [esi+0000008C]
   jmp return
@@ -156,5 +163,36 @@ dealloc(newmem)
 </AssemblerScript>
     </CheatEntry>
   </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Change of push sonomusume.exe+545FC</Description>
+      <Address>012E2008</Address>
+      <ModuleName>sonomusume.exe</ModuleName>
+      <ModuleNameOffset>2008</ModuleNameOffset>
+      <Before>
+        <Byte>8B</Byte>
+        <Byte>08</Byte>
+        <Byte>8B</Byte>
+        <Byte>51</Byte>
+        <Byte>34</Byte>
+      </Before>
+      <Actual>
+        <Byte>68</Byte>
+        <Byte>FC</Byte>
+        <Byte>45</Byte>
+        <Byte>33</Byte>
+        <Byte>01</Byte>
+      </Actual>
+      <After>
+        <Byte>50</Byte>
+        <Byte>FF</Byte>
+        <Byte>D2</Byte>
+        <Byte>8B</Byte>
+        <Byte>3F</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
   <UserdefinedSymbols/>
+  <Comments>todo cum with loop and resume
+remove censor</Comments>
 </CheatTable>
