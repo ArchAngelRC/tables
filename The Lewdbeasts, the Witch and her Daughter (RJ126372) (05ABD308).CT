@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>14</ID>
+      <Description>"money"</Description>
+      <LastState Value="502" Activated="1" RealAddress="01354B20"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>sonomusume.exe+74B20</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>15</ID>
+      <Description>"house"</Description>
+      <LastState Value="9" Activated="1" RealAddress="01354B24"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>sonomusume.exe+74B24</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>10</ID>
+      <Description>"hp always full"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : sonomusume.exe (paused)
+  Version: 
+  Date   : 2018-01-17
+  Author : LustWolf
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(hpread,sonomusume.exe,DB 86 8C 00 00 00 DA) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+  mov [esi+0000008C],#50
+code:
+  fild dword ptr [esi+0000008C]
+  jmp return
+
+hpread:
+  jmp newmem
+  nop
+return:
+registersymbol(hpread)
+
+[DISABLE]
+
+hpread:
+  db DB 86 8C 00 00 00
+
+unregistersymbol(hpread)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "sonomusume.exe"+56BC
+
+"sonomusume.exe"+5697: 89 08                 -  mov [eax],ecx
+"sonomusume.exe"+5699: D9 5C 24 28           -  fstp dword ptr [esp+28]
+"sonomusume.exe"+569D: 8B 54 24 28           -  mov edx,[esp+28]
+"sonomusume.exe"+56A1: D9 EE                 -  fldz 
+"sonomusume.exe"+56A3: 89 50 04              -  mov [eax+04],edx
+"sonomusume.exe"+56A6: D9 5C 24 2C           -  fstp dword ptr [esp+2C]
+"sonomusume.exe"+56AA: 8B 4C 24 2C           -  mov ecx,[esp+2C]
+"sonomusume.exe"+56AE: 89 48 08              -  mov [eax+08],ecx
+"sonomusume.exe"+56B1: 8B 86 A4 00 00 00     -  mov eax,[esi+000000A4]
+"sonomusume.exe"+56B7: E8 B4 36 02 00        -  call sonomusume.exe+28D70
+// ---------- INJECTING HERE ----------
+"sonomusume.exe"+56BC: DB 86 8C 00 00 00     -  fild dword ptr [esi+0000008C]
+// ---------- DONE INJECTING  ----------
+"sonomusume.exe"+56C2: DA B6 34 01 00 00     -  fidiv dword ptr [esi+00000134]
+"sonomusume.exe"+56C8: DC 0D 10 75 1A 00     -  fmul qword ptr [sonomusume.exe+37510]
+"sonomusume.exe"+56CE: E8 ED 70 02 00        -  call sonomusume.exe+2C7C0
+"sonomusume.exe"+56D3: 3B C3                 -  cmp eax,ebx
+"sonomusume.exe"+56D5: 89 44 24 10           -  mov [esp+10],eax
+"sonomusume.exe"+56D9: 7D 04                 -  jnl sonomusume.exe+56DF
+"sonomusume.exe"+56DB: 89 5C 24 10           -  mov [esp+10],ebx
+"sonomusume.exe"+56DF: 8B 86 A4 00 00 00     -  mov eax,[esi+000000A4]
+"sonomusume.exe"+56E5: DB 44 24 10           -  fild dword ptr [esp+10]
+"sonomusume.exe"+56E9: 89 78 40              -  mov [eax+40],edi
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>13</ID>
+      <Description>"struggle always low"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : sonomusume.exe (paused)
+  Version: 
+  Date   : 2018-01-17
+  Author : LustWolf
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(struggleaob,sonomusume.exe,8B 99 64 01 00 00) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+  mov [ecx+00000164],5 //set struggle to 5
+code:
+  mov ebx,[ecx+00000164]
+  jmp return
+
+struggleaob:
+  jmp newmem
+  nop
+return:
+registersymbol(struggleaob)
+
+[DISABLE]
+
+struggleaob:
+  db 8B 99 64 01 00 00
+
+unregistersymbol(struggleaob)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "sonomusume.exe"+6818
+
+"sonomusume.exe"+67ED: 74 06                 -  je sonomusume.exe+67F5
+"sonomusume.exe"+67EF: 89 54 24 10           -  mov [esp+10],edx
+"sonomusume.exe"+67F3: EB 07                 -  jmp sonomusume.exe+67FC
+"sonomusume.exe"+67F5: 8B 41 04              -  mov eax,[ecx+04]
+"sonomusume.exe"+67F8: 89 44 24 10           -  mov [esp+10],eax
+"sonomusume.exe"+67FC: 38 15 2D D2 F3 00     -  cmp [sonomusume.exe+3D22D],dl
+"sonomusume.exe"+6802: 0F 84 28 02 00 00     -  je sonomusume.exe+6A30
+"sonomusume.exe"+6808: 38 15 2C D2 F3 00     -  cmp [sonomusume.exe+3D22C],dl
+"sonomusume.exe"+680E: 0F 84 1C 02 00 00     -  je sonomusume.exe+6A30
+"sonomusume.exe"+6814: 8B 4C 24 10           -  mov ecx,[esp+10]
+// ---------- INJECTING HERE ----------
+"sonomusume.exe"+6818: 8B 99 64 01 00 00     -  mov ebx,[ecx+00000164]
+// ---------- DONE INJECTING  ----------
+"sonomusume.exe"+681E: 8B 86 80 00 00 00     -  mov eax,[esi+00000080]
+"sonomusume.exe"+6824: 89 5C 24 14           -  mov [esp+14],ebx
+"sonomusume.exe"+6828: DB 44 24 14           -  fild dword ptr [esp+14]
+"sonomusume.exe"+682C: B9 37 00 00 00        -  mov ecx,00000037
+"sonomusume.exe"+6831: 89 48 44              -  mov [eax+44],ecx
+"sonomusume.exe"+6834: 89 48 48              -  mov [eax+48],ecx
+"sonomusume.exe"+6837: DC 0D 98 76 F3 00     -  fmul qword ptr [sonomusume.exe+37698]
+"sonomusume.exe"+683D: 89 48 4C              -  mov [eax+4C],ecx
+"sonomusume.exe"+6840: BD FF 00 00 00        -  mov ebp,000000FF
+"sonomusume.exe"+6845: 89 68 40              -  mov [eax+40],ebp
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
