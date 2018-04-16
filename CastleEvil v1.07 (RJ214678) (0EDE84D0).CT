@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>16</ID>
+      <Description>"HP (static)"</Description>
+      <LastState Value="100" Activated="1" RealAddress="00E20B68"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>CastleEvil.exe+B20B68</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>23</ID>
+      <Description>"escape rage (static) (insert to break out when rage appears)"</Description>
+      <LastState Value="100" RealAddress="00E20B1C"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>CastleEvil.exe+B20B1C</Address>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Set Value</Action>
+          <Keys>
+            <Key>45</Key>
+          </Keys>
+          <Value>100</Value>
+          <ID>0</ID>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>14</ID>
+      <Description>"wip escape green (static)"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>CastleEvil_Trial.exe+B1AAE8</Address>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Set Value</Action>
+          <Keys/>
+          <Value>300</Value>
+          <ID>0</ID>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>9</ID>
+      <Description>"get state (0 is armour)"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : CastleEvil.exe
+  Version: 
+  Date   : 2018-04-15
+  Author : LustWolf
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(armour_state,CastleEvil.exe,8B 10 85 D2 78 1E) // should be unique
+alloc(newmem,$1000)
+globalalloc(_state,8)
+_state:
+  db 0
+
+label(code)
+label(return)
+
+newmem:
+  push ebx
+  lea ebx,[eax]
+  mov [_state],ebx
+  pop ebx
+
+code:
+  mov edx,[eax]
+  test edx,edx
+  js CastleEvil.exe+F2DA
+  jmp return
+
+armour_state:
+  jmp newmem
+  nop
+return:
+registersymbol(armour_state)
+
+[DISABLE]
+
+armour_state:
+  db 8B 10 85 D2 78 1E
+
+unregistersymbol(armour_state)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "CastleEvil_Trial.exe"+F2B6
+
+"CastleEvil_Trial.exe"+F28A: 1D 00 A0 E9 1D        -  sbb eax,1DE9A000
+"CastleEvil_Trial.exe"+F28F: 00 BC E9 1D 00 F1 E9  -  add [ecx+ebp*8-160EFFE3],bh
+"CastleEvil_Trial.exe"+F296: 1D 00 D8 E9 1D        -  sbb eax,1DE9D800
+"CastleEvil_Trial.exe"+F29B: 00 0D EA 1D 00 26     -  add [26001DEA],cl
+"CastleEvil_Trial.exe"+F2A1: EA 1D 00 3F EA 1D 00  -  jmp 001D:EA3F001D
+"CastleEvil_Trial.exe"+F2A8: 58                    -  pop eax
+"CastleEvil_Trial.exe"+F2A9: EA 1D 00 CC CC CC CC  -  jmp CCCC:CCCC001D
+"CastleEvil_Trial.exe"+F2B0: 55                    -  push ebp
+"CastleEvil_Trial.exe"+F2B1: 8B EC                 -  mov ebp,esp
+"CastleEvil_Trial.exe"+F2B3: 8B 41 04              -  mov eax,[ecx+04]
+// ---------- INJECTING HERE ----------
+"CastleEvil_Trial.exe"+F2B6: 8B 10                 -  mov edx,[eax]
+"CastleEvil_Trial.exe"+F2B8: 85 D2                 -  test edx,edx
+"CastleEvil_Trial.exe"+F2BA: 78 1E                 -  js CastleEvil_Trial.exe+F2DA
+// ---------- DONE INJECTING  ----------
+"CastleEvil_Trial.exe"+F2BC: 8B 41 40              -  mov eax,[ecx+40]
+"CastleEvil_Trial.exe"+F2BF: 8B 0C 90              -  mov ecx,[eax+edx*4]
+"CastleEvil_Trial.exe"+F2C2: 85 C9                 -  test ecx,ecx
+"CastleEvil_Trial.exe"+F2C4: 74 14                 -  je CastleEvil_Trial.exe+F2DA
+"CastleEvil_Trial.exe"+F2C6: FF 75 18              -  push [ebp+18]
+"CastleEvil_Trial.exe"+F2C9: 8B 01                 -  mov eax,[ecx]
+"CastleEvil_Trial.exe"+F2CB: FF 75 14              -  push [ebp+14]
+"CastleEvil_Trial.exe"+F2CE: FF 75 10              -  push [ebp+10]
+"CastleEvil_Trial.exe"+F2D1: FF 75 0C              -  push [ebp+0C]
+"CastleEvil_Trial.exe"+F2D4: FF 75 08              -  push [ebp+08]
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>10</ID>
+          <Description>"Armour state (home to restore, pgup/dwn to mod)"</Description>
+          <LastState Value="0" RealAddress="00EE6658"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_state]</Address>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>36</Key>
+              </Keys>
+              <Value>0</Value>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>18</ID>
+      <Description>"find ero addy"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : CastleEvil.exe (paused)
+  Version: 
+  Date   : 2018-04-15
+  Author : LustWolf
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(ero,CastleEvil.exe,8B 76 08 89 75 98) // should be unique
+alloc(newmem,$1000)
+globalalloc(_ero,8)
+_ero:
+  db 0
+
+label(code)
+label(return)
+
+newmem:
+  push ebx
+  lea ebx,[esi+08]
+  mov [_ero],ebx
+  pop ebx
+
+code:
+  mov esi,[esi+08]
+  mov [ebp-68],esi
+  jmp return
+
+ero:
+  jmp newmem
+  nop
+return:
+registersymbol(ero)
+
+[DISABLE]
+
+ero:
+  db 8B 76 08 89 75 98
+
+unregistersymbol(ero)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "CastleEvil.exe"+506C8
+
+"CastleEvil.exe"+506A0: 8B 35 30 11 B4 00              -  mov esi,[CastleEvil.exe+B21130]
+"CastleEvil.exe"+506A6: 2B C6                          -  sub eax,esi
+"CastleEvil.exe"+506A8: C1 F8 02                       -  sar eax,02
+"CastleEvil.exe"+506AB: C7 85 7C FF FF FF 00 00 00 00  -  mov [ebp-00000084],00000000
+"CastleEvil.exe"+506B5: C7 45 8C C8 00 00 00           -  mov [ebp-74],000000C8
+"CastleEvil.exe"+506BC: 83 F8 02                       -  cmp eax,02
+"CastleEvil.exe"+506BF: 7F 07                          -  jg CastleEvil.exe+506C8
+"CastleEvil.exe"+506C1: 33 F6                          -  xor esi,esi
+"CastleEvil.exe"+506C3: 89 75 98                       -  mov [ebp-68],esi
+"CastleEvil.exe"+506C6: EB 1C                          -  jmp CastleEvil.exe+506E4
+// ---------- INJECTING HERE ----------
+"CastleEvil.exe"+506C8: 8B 76 08                       -  mov esi,[esi+08]
+"CastleEvil.exe"+506CB: 89 75 98                       -  mov [ebp-68],esi
+// ---------- DONE INJECTING  ----------
+"CastleEvil.exe"+506CE: 83 FE 32                       -  cmp esi,32
+"CastleEvil.exe"+506D1: 7C 11                          -  jl CastleEvil.exe+506E4
+"CastleEvil.exe"+506D3: C7 85 7C FF FF FF C8 00 00 00  -  mov [ebp-00000084],000000C8
+"CastleEvil.exe"+506DD: C7 45 8C 50 00 00 00           -  mov [ebp-74],00000050
+"CastleEvil.exe"+506E4: 83 F8 02                       -  cmp eax,02
+"CastleEvil.exe"+506E7: 7F 0C                          -  jg CastleEvil.exe+506F5
+"CastleEvil.exe"+506E9: C7 85 78 FF FF FF FF FF FF FF  -  mov [ebp-00000088],FFFFFFFF
+"CastleEvil.exe"+506F3: EB 0E                          -  jmp CastleEvil.exe+50703
+"CastleEvil.exe"+506F5: A1 3C 11 B4 00                 -  mov eax,[CastleEvil.exe+B2113C]
+"CastleEvil.exe"+506FA: 8B 40 08                       -  mov eax,[eax+08]
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>19</ID>
+          <Description>"ero"</Description>
+          <LastState Value="83" RealAddress="028A7B38"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_ero]</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>21</ID>
+      <Description>"Find Armour addy"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : CastleEvil.exe
+  Version: 
+  Date   : 2018-04-15
+  Author : LustWolf
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(armour,CastleEvil.exe,8B 4E 14 8B 40 20) // should be unique
+alloc(newmem,$1000)
+globalalloc(_armour,8)
+_armour:
+  db 0
+
+
+label(code)
+label(return)
+
+newmem:
+  push ebx
+  lea ebx, [esi+14]
+  mov [_armour],ebx
+  pop ebx
+
+code:
+  mov ecx,[esi+14]
+  mov eax,[eax+20]
+  jmp return
+
+armour:
+  jmp newmem
+  nop
+return:
+registersymbol(armour)
+
+[DISABLE]
+
+armour:
+  db 8B 4E 14 8B 40 20
+
+unregistersymbol(armour)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "CastleEvil.exe"+E337
+
+"CastleEvil.exe"+E31D: 0F 84 E1 01 00 00     -  je CastleEvil.exe+E504
+"CastleEvil.exe"+E323: 51                    -  push ecx
+"CastleEvil.exe"+E324: 53                    -  push ebx
+"CastleEvil.exe"+E325: E8 26 8B FF FF        -  call CastleEvil.exe+6E50
+"CastleEvil.exe"+E32A: 85 C0                 -  test eax,eax
+"CastleEvil.exe"+E32C: 75 04                 -  jne CastleEvil.exe+E332
+"CastleEvil.exe"+E32E: 33 FF                 -  xor edi,edi
+"CastleEvil.exe"+E330: EB 02                 -  jmp CastleEvil.exe+E334
+"CastleEvil.exe"+E332: 8B 38                 -  mov edi,[eax]
+"CastleEvil.exe"+E334: 8B 46 10              -  mov eax,[esi+10]
+// ---------- INJECTING HERE ----------
+"CastleEvil.exe"+E337: 8B 4E 14              -  mov ecx,[esi+14]
+"CastleEvil.exe"+E33A: 8B 40 20              -  mov eax,[eax+20]
+// ---------- DONE INJECTING  ----------
+"CastleEvil.exe"+E33D: 89 45 F8              -  mov [ebp-08],eax
+"CastleEvil.exe"+E340: 8B 46 04              -  mov eax,[esi+04]
+"CastleEvil.exe"+E343: 3D A9 00 00 00        -  cmp eax,000000A9
+"CastleEvil.exe"+E348: 0F 87 A8 00 00 00     -  ja CastleEvil.exe+E3F6
+"CastleEvil.exe"+E34E: 0F B6 80 30 E5 30 00  -  movzx eax,byte ptr [eax+CastleEvil.exe+E530]
+"CastleEvil.exe"+E355: FF 24 85 18 E5 30 00  -  jmp dword ptr [eax*4+CastleEvil.exe+E518]
+"CastleEvil.exe"+E35C: 83 F9 32              -  cmp ecx,32
+"CastleEvil.exe"+E35F: 0F 8F 91 00 00 00     -  jg CastleEvil.exe+E3F6
+"CastleEvil.exe"+E365: 53                    -  push ebx
+"CastleEvil.exe"+E366: 68 8C 01 00 00        -  push 0000018C
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>22</ID>
+          <Description>"Armour (40 allows h scenes)"</Description>
+          <LastState Value="40" RealAddress="15A1044C"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_armour]</Address>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>36</Key>
+              </Keys>
+              <Value>100</Value>
+              <ID>0</ID>
+            </Hotkey>
+            <Hotkey>
+              <Action>Increase Value</Action>
+              <Keys>
+                <Key>33</Key>
+              </Keys>
+              <Value>30</Value>
+              <ID>1</ID>
+            </Hotkey>
+            <Hotkey>
+              <Action>Decrease Value</Action>
+              <Keys>
+                <Key>34</Key>
+              </Keys>
+              <Value>30</Value>
+              <ID>2</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_ero</Name>
+      <Address>05E00000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_armour</Name>
+      <Address>05E00010</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_state</Name>
+      <Address>05E00020</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+  <Comments>Info about this table:
+</Comments>
+</CheatTable>
