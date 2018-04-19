@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>8</ID>
+      <Description>"Find Player Base [lives and hp]"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : stdrt.exe
+  Version: 
+  Date   : 2018-04-15
+  Author : LustWolf
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(player_base,stdrt.exe,8B 80 0A 02 00 00 89) // should be unique
+alloc(newmem,$1000)
+globalalloc(_hp,8)
+_hp:
+  db 0
+globalalloc(_lives,8)
+_lives:
+  db 0
+globalalloc(_power,8)
+_lives:
+  db 0
+
+label(code)
+label(return)
+label(hp)
+label(power)
+
+newmem:
+  pushf
+  cmp [eax+14],80008002//80000034
+  jne hp
+  mov [_lives],eax
+  jmp code
+
+hp:
+  cmp [eax+14],80008000//80000029
+  jne power
+  mov [_hp],eax
+  jmp code
+
+power:
+  mov [_power],eax
+  jmp code
+
+code:
+  popf
+  mov eax,[eax+0000020A]
+  jmp return
+
+player_base:
+  jmp newmem
+  nop
+return:
+registersymbol(player_base)
+
+[DISABLE]
+
+player_base:
+  db 8B 80 0A 02 00 00
+
+unregistersymbol(player_base)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "stdrt.exe"+DB8E
+
+"stdrt.exe"+DB6B: 89 7C 24 10              -  mov [esp+10],edi
+"stdrt.exe"+DB6F: F7 D0                    -  not eax
+"stdrt.exe"+DB71: 89 44 24 18              -  mov [esp+18],eax
+"stdrt.exe"+DB75: EB 54                    -  jmp stdrt.exe+DBCB
+"stdrt.exe"+DB77: DD 80 0A 02 00 00        -  fld qword ptr [eax+0000020A]
+"stdrt.exe"+DB7D: E8 3C 00 04 00           -  call stdrt.exe+4DBBE
+"stdrt.exe"+DB82: F7 D0                    -  not eax
+"stdrt.exe"+DB84: 89 7C 24 10              -  mov [esp+10],edi
+"stdrt.exe"+DB88: 89 44 24 18              -  mov [esp+18],eax
+"stdrt.exe"+DB8C: EB 3D                    -  jmp stdrt.exe+DBCB
+// ---------- INJECTING HERE ----------
+"stdrt.exe"+DB8E: 8B 80 0A 02 00 00        -  mov eax,[eax+0000020A]
+// ---------- DONE INJECTING  ----------
+"stdrt.exe"+DB94: 89 7C 24 10              -  mov [esp+10],edi
+"stdrt.exe"+DB98: F7 D0                    -  not eax
+"stdrt.exe"+DB9A: 89 44 24 18              -  mov [esp+18],eax
+"stdrt.exe"+DB9E: EB 2B                    -  jmp stdrt.exe+DBCB
+"stdrt.exe"+DBA0: 2B CF                    -  sub ecx,edi
+"stdrt.exe"+DBA2: 74 15                    -  je stdrt.exe+DBB9
+"stdrt.exe"+DBA4: 83 E9 02                 -  sub ecx,02
+"stdrt.exe"+DBA7: 74 08                    -  je stdrt.exe+DBB1
+"stdrt.exe"+DBA9: DD 05 A0 F8 44 00        -  fld qword ptr [stdrt.exe+4F8A0]
+"stdrt.exe"+DBAF: EB 0E                    -  jmp stdrt.exe+DBBF
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>9</ID>
+          <Description>"Lives (253 Full)(higher is bad)"</Description>
+          <LastState Value="253" Activated="1" RealAddress="07B8722A"/>
+          <VariableType>Byte</VariableType>
+          <Address>[_lives]+20a</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>13</ID>
+          <Description>"hp (155 full (100), 255 is 0)(pgdwn set hp to 20)"</Description>
+          <LastState Value="255" RealAddress="07B876FA"/>
+          <VariableType>Byte</VariableType>
+          <Address>[_hp]+20a</Address>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>34</Key>
+              </Keys>
+              <Value>235</Value>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>14</ID>
+          <Description>"targets (255 is 0, decrease as target increase)"</Description>
+          <LastState Value="249" RealAddress="07B87492"/>
+          <VariableType>Byte</VariableType>
+          <Address>[_power]+20a</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_health</Name>
+      <Address>02A10000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_lives</Name>
+      <Address>03C90010</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_hp</Name>
+      <Address>03C90000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_power</Name>
+      <Address>03C90020</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+  <Comments>Health - byte - 155 is full, higher is worse
+lives - byte - 253 is 2 - 255 empty
+</Comments>
+</CheatTable>
