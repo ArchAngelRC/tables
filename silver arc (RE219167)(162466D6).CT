@@ -93,6 +93,13 @@ dealloc(newmem)
         </CheatEntry>
       </CheatEntries>
     </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"power shot (static)"</Description>
+      <LastState Value="2" Activated="1" RealAddress="004DFC95"/>
+      <VariableType>Byte</VariableType>
+      <Address>wolp_game_e.exe+DFC95</Address>
+    </CheatEntry>
   </CheatEntries>
   <UserdefinedSymbols>
     <SymbolEntry>
