@@ -16,6 +16,6 @@ Ex: `Game v1.23 (RE123456)(1234567890)`
 
 ### Generate truncated MD5 via PowerShell:
 ```powershell
-$file = "Full path to game binary"
+$file = ls "Full path to game binary"
 $($(Get-FileHash $file.FullName -Algorithm MD5).Hash).substring(22,10)
 ```
