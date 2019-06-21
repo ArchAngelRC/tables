@@ -10,7 +10,7 @@ For most files, where applicable, I'm doing the following scheme:
 
 `Game Name and Version (DLsiteid)(last 10 characters of game binary MD5).CT`
 
-Ex: `Game v1.23 (RE123456)(1234567890)`
+Ex: `Game v1.23 (RE123456)(1234567890).CT`
 
 **Note**: I'm using the MD5 part mostly for myself to verify I have the right file at a glance. Truncated for file name size. Not concerned about collisions.
 
