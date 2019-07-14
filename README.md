@@ -20,5 +20,5 @@ $ans = read-host "Paste full game .exe path"
 $ans = $ans -replace '"', ""
 $file = ls $ans
 $($(Get-FileHash $file.FullName -Algorithm MD5).Hash).substring(22,10)
-
+\
 ```
