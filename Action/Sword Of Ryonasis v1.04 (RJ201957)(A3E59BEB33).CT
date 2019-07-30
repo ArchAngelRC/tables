@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="28">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>23</ID>
+      <Description>"Find Hearts"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : �[�h�E�I�u�E�����i�V�X104dl.exe
+  Version: 1.04
+  Date   : 2019-07-28
+  Author : LustWolf
+
+}
+
+[ENABLE]
+
+aobscanmodule(hearts,ソード・オブ・リョナシス104dl.exe,58 02 00 00 0F BF C9 8B 44 88 FC 3B F0) // should be unique
+alloc(newmem,$1000)
+globalalloc(_hearts,$8)
+_hearts:
+db 0
+
+label(code)
+label(return)
+
+newmem:
+  push ebx
+  lea ebx,[eax+ecx*4-04]
+  mov [_hearts],ebx
+  pop ebx
+  jmp code
+
+code:
+  mov eax,[eax+ecx*4-04]
+  cmp esi,eax
+  jmp return
+
+hearts+07:
+  jmp newmem
+  nop
+return:
+registersymbol(hearts)
+
+[DISABLE]
+
+hearts+07:
+  db 8B 44 88 FC 3B F0
+
+unregistersymbol(hearts)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "ソード・オブ・リョナシス104dl.exe"+6987
+
+"ソード・オブ・リョナシス104dl.exe"+6963: 74 13                          -  je ソード・オブ・リョナシス104dl.exe+6978
+"ソード・オブ・リョナシス104dl.exe"+6965: 83 E8 02                       -  sub eax,02
+"ソード・オブ・リョナシス104dl.exe"+6968: 74 04                          -  je ソード・オブ・リョナシス104dl.exe+696E
+"ソード・オブ・リョナシス104dl.exe"+696A: 33 F6                          -  xor esi,esi
+"ソード・オブ・リョナシス104dl.exe"+696C: EB 10                          -  jmp ソード・オブ・リョナシス104dl.exe+697E
+"ソード・オブ・リョナシス104dl.exe"+696E: F2 0F 2C B2 0A 02 00 00        -  cvttsd2si esi,[edx+0000020A]
+"ソード・オブ・リョナシス104dl.exe"+6976: EB 06                          -  jmp ソード・オブ・リョナシス104dl.exe+697E
+"ソード・オブ・リョナシス104dl.exe"+6978: 8B B2 0A 02 00 00              -  mov esi,[edx+0000020A]
+"ソード・オブ・リョナシス104dl.exe"+697E: 8B 87 58 02 00 00              -  mov eax,[edi+00000258]
+"ソード・オブ・リョナシス104dl.exe"+6984: 0F BF C9                       -  movsx ecx,cx
+// ---------- INJECTING HERE ----------
+"ソード・オブ・リョナシス104dl.exe"+6987: 8B 44 88 FC                    -  mov eax,[eax+ecx*4-04]
+"ソード・オブ・リョナシス104dl.exe"+698B: 3B F0                          -  cmp esi,eax
+// ---------- DONE INJECTING  ----------
+"ソード・オブ・リョナシス104dl.exe"+698D: 5E                             -  pop esi
+"ソード・オブ・リョナシス104dl.exe"+698E: 74 1A                          -  je ソード・オブ・リョナシス104dl.exe+69AA
+"ソード・オブ・リョナシス104dl.exe"+6990: C7 82 02 02 00 00 00 00 00 00  -  mov [edx+00000202],00000000
+"ソード・オブ・リョナシス104dl.exe"+699A: 89 82 0A 02 00 00              -  mov [edx+0000020A],eax
+"ソード・オブ・リョナシス104dl.exe"+69A0: B8 02 00 00 00                 -  mov eax,00000002
+"ソード・オブ・リョナシス104dl.exe"+69A5: 5F                             -  pop edi
+"ソード・オブ・リョナシス104dl.exe"+69A6: 5D                             -  pop ebp
+"ソード・オブ・リョナシス104dl.exe"+69A7: C2 04 00                       -  ret 0004
+"ソード・オブ・リョナシス104dl.exe"+69AA: 33 C0                          -  xor eax,eax
+"ソード・オブ・リョナシス104dl.exe"+69AC: 5F                             -  pop edi
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>24</ID>
+          <Description>"Hearts 249 full, 255-down (home-down)"</Description>
+          <DropDownList ReadOnly="1" DisplayValueAsItem="1">249:6 hearts (full)
+250:5 hearts
+251:4 hearts
+252:3 hearts
+253:2 hearts
+254:1 heart
+255:0 hearts
+</DropDownList>
+          <VariableType>Byte</VariableType>
+          <Address>[_hearts]</Address>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>34</Key>
+              </Keys>
+              <Value>255</Value>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>26</ID>
+      <Description>"Find Player Base v2"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : �[�h�E�I�u�E�����i�V�X104dl.exe
+  Version: 1.04
+  Date   : 2019-07-29
+  Author : LustWolf
+
+
+}
+
+[ENABLE]
+
+aobscanmodule(new_player_base,ソード・オブ・リョナシス104dl.exe,39 72 08 0F 9D C0) // should be unique
+alloc(newmem,$1000)
+globalalloc(_lives,$8)
+_lives:
+db 0
+globalalloc(_magic,$8)
+_magic:
+db 0
+
+
+label(code)
+label(return)
+label(notLives)
+
+newmem:
+  pushf
+  cmp [edx+68],6
+  jne notLives
+  push ebx
+  lea ebx,[edx+08]
+  mov [_lives],ebx
+  pop ebx
+  jmp code
+
+notLives:
+  cmp [edx+68],2
+  jne code
+  push ebx
+  lea ebx,[edx+08]
+  mov [_magic],ebx
+  pop ebx
+  jmp code
+
+code:
+  popf
+  cmp [edx+08],esi
+  setge al
+  jmp return
+
+new_player_base:
+  jmp newmem
+  nop
+return:
+registersymbol(new_player_base)
+
+[DISABLE]
+
+new_player_base:
+  db 39 72 08 0F 9D C0
+
+unregistersymbol(new_player_base)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "ソード・オブ・リョナシス104dl.exe"+109C7
+
+"ソード・オブ・リョナシス104dl.exe"+109AB: 83 E9 02           -  sub ecx,02
+"ソード・オブ・リョナシス104dl.exe"+109AE: 75 1D              -  jne ソード・オブ・リョナシス104dl.exe+109CD
+"ソード・オブ・リョナシス104dl.exe"+109B0: F2 0F 10 42 08     -  movsd xmm0,[edx+08]
+"ソード・オブ・リョナシス104dl.exe"+109B5: 66 0F 6E CE        -  movd xmm1,esi
+"ソード・オブ・リョナシス104dl.exe"+109B9: F3 0F E6 C9        -  cvtdq2pd xmm1,xmm1,xmm1
+"ソード・オブ・リョナシス104dl.exe"+109BD: 5E                 -  pop esi
+"ソード・オブ・リョナシス104dl.exe"+109BE: 66 0F 2F C1        -  comisd xmm0,xmm1
+"ソード・オブ・リョナシス104dl.exe"+109C2: 0F 93 C0           -  setae al
+"ソード・オブ・リョナシス104dl.exe"+109C5: 5D                 -  pop ebp
+"ソード・オブ・リョナシス104dl.exe"+109C6: C3                 -  ret 
+// ---------- INJECTING HERE ----------
+"ソード・オブ・リョナシス104dl.exe"+109C7: 39 72 08           -  cmp [edx+08],esi
+"ソード・オブ・リョナシス104dl.exe"+109CA: 0F 9D C0           -  setge al
+// ---------- DONE INJECTING  ----------
+"ソード・オブ・リョナシス104dl.exe"+109CD: 5E                 -  pop esi
+"ソード・オブ・リョナシス104dl.exe"+109CE: 5D                 -  pop ebp
+"ソード・オブ・リョナシス104dl.exe"+109CF: C3                 -  ret 
+"ソード・オブ・リョナシス104dl.exe"+109D0: 55                 -  push ebp
+"ソード・オブ・リョナシス104dl.exe"+109D1: 8B EC              -  mov ebp,esp
+"ソード・オブ・リョナシス104dl.exe"+109D3: 8B 0D CC 39 FB 00  -  mov ecx,[ソード・オブ・リョナシス104dl.exe+B39CC]
+"ソード・オブ・リョナシス104dl.exe"+109D9: 56                 -  push esi
+"ソード・オブ・リョナシス104dl.exe"+109DA: 8B 75 08           -  mov esi,[ebp+08]
+"ソード・オブ・リョナシス104dl.exe"+109DD: 83 C6 10           -  add esi,10
+"ソード・オブ・リョナシス104dl.exe"+109E0: 0F BF 06           -  movsx eax,word ptr [esi]
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>27</ID>
+          <Description>"Lives"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_lives]</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>28</ID>
+          <Description>"Magic"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_magic]</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>29</ID>
+          <Description>"Exp (spending points)(works to a degree)"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_magic]+90</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_lives</Name>
+      <Address>02F60010</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_heart</Name>
+      <Address>02F50010</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_hp</Name>
+      <Address>02EC0000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_magic</Name>
+      <Address>02F60020</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_hearts</Name>
+      <Address>02F60000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+  <Comments>lives- 4 bytes as is
+magic - 4 bytes as is (100 full)
+hearts - byte 249 full (6), 255-down
+</Comments>
+</CheatTable>
