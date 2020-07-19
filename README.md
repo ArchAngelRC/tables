@@ -3,6 +3,8 @@ Cheat Engine tables for NSFW Games
 
 Feel free to share, edit or modify these tables.
 
+To use, download the .CH file, open it in Cheat Engine, and attach to the associated game.
+
 
 ## Naming Scheme
 
