@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="31">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>4</ID>
+      <Description>"find hp"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Game   : Lewd City Girls.exe
+// Version:
+// Date   :
+// Author : LustWolf
+
+[ENABLE]
+aobscan(aob_hp,08 8B 87 94 00 00 00 D9 87 CC 00 00 00) 
+alloc(newmem,1024)
+globalalloc(_hp,8)
+_hp:
+  dq 0 //dq used to take care of 64-bit apps too
+
+label(code)
+label(return)
+
+newmem:
+  //pushf //uncomment if comparing
+  push edx
+  lea edx,[edi+cc]
+  mov [_hp],edx   //put address you're interested in seeing the value of here (Injection Copy)
+  pop edx
+  jmp code
+
+code:
+  //popf //uncomment if comparing
+
+  fld dword ptr [edi+000000CC]
+  jmp return
+
+aob_hp+07:
+  jmp newmem
+  nop
+return:
+registersymbol(aob_hp)
+
+[DISABLE]
+aob_hp+07:
+  db D9 87 CC 00 00 00
+
+unregistersymbol(aob_hp)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 0580C148
+
+0580C12D: E9 F6 3E 9B FF     -  jmp 051C0028
+0580C132: 00 00              -  add [eax],al
+0580C134: 00 00              -  add [eax],al
+0580C136: 00 00              -  add [eax],al
+0580C138: 55                 -  push ebp
+0580C139: 8B EC              -  mov ebp,esp
+0580C13B: 57                 -  push edi
+0580C13C: 83 EC 04           -  sub esp,04
+0580C13F: 8B 7D 08           -  mov edi,[ebp+08]
+0580C142: 8B 87 94 00 00 00  -  mov eax,[edi+00000094]
+// ---------- INJECTING HERE ----------
+0580C148: D9 87 CC 00 00 00  -  fld dword ptr [edi+000000CC]
+// ---------- DONE INJECTING  ----------
+0580C14E: 83 EC 08           -  sub esp,08
+0580C151: 83 EC 04           -  sub esp,04
+0580C154: D9 1C 24           -  fstp dword ptr [esp]
+0580C157: 50                 -  push eax
+0580C158: 8B 00              -  mov eax,[eax]
+0580C15A: 90                 -  nop 
+0580C15B: 90                 -  nop 
+0580C15C: 90                 -  nop 
+0580C15D: FF 90 F8 00 00 00  -  call dword ptr [eax+000000F8]
+0580C163: 83 C4 10           -  add esp,10
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>5</ID>
+          <Description>"hp"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[_hp]</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>7</ID>
+          <Description>"condoms"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+c</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>10</ID>
+      <Description>"find sp"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Game   : Lewd City Girls.exe
+// Version:
+// Date   :
+// Author : 
+
+[ENABLE]
+aobscan(aob_sp,98 00 00 00 8B 4F 30 D9 41 20 83 EC 08) 
+alloc(newmem,1024)
+globalalloc(_sp,8)
+_sp:
+  dq 0 //dq used to take care of 64-bit apps too
+
+label(code)
+label(return)
+
+newmem:
+  //pushf //uncomment if comparing
+  push edx
+  lea edx,[ecx+20]
+  mov [_sp],edx   //put address you're interested in seeing the value of here (Injection Copy)
+  pop edx
+  jmp code
+
+code:
+  //popf //uncomment if comparing
+
+  fld dword ptr [ecx+20]
+  sub esp,08
+  jmp return
+
+aob_sp+07:
+  jmp newmem
+  nop
+return:
+registersymbol(aob_sp)
+
+[DISABLE]
+aob_sp+07:
+  db D9 41 20 83 EC 08
+
+unregistersymbol(aob_sp)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 0580C16F
+
+0580C154: D9 1C 24           -  fstp dword ptr [esp]
+0580C157: 50                 -  push eax
+0580C158: 8B 00              -  mov eax,[eax]
+0580C15A: 90                 -  nop 
+0580C15B: 90                 -  nop 
+0580C15C: 90                 -  nop 
+0580C15D: FF 90 F8 00 00 00  -  call dword ptr [eax+000000F8]
+0580C163: 83 C4 10           -  add esp,10
+0580C166: 8B 87 98 00 00 00  -  mov eax,[edi+00000098]
+0580C16C: 8B 4F 30           -  mov ecx,[edi+30]
+// ---------- INJECTING HERE ----------
+0580C16F: D9 41 20           -  fld dword ptr [ecx+20]
+0580C172: 83 EC 08           -  sub esp,08
+// ---------- DONE INJECTING  ----------
+0580C175: 83 EC 04           -  sub esp,04
+0580C178: D9 1C 24           -  fstp dword ptr [esp]
+0580C17B: 50                 -  push eax
+0580C17C: 8B 00              -  mov eax,[eax]
+0580C17E: 90                 -  nop 
+0580C17F: 90                 -  nop 
+0580C180: 90                 -  nop 
+0580C181: FF 90 F8 00 00 00  -  call dword ptr [eax+000000F8]
+0580C187: 83 C4 10           -  add esp,10
+0580C18A: 8B 87 9C 00 00 00  -  mov eax,[edi+0000009C]
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>11</ID>
+          <Description>"SP (300 is naked)"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[_sp]</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_hp</Name>
+      <Address>09550000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_sp</Name>
+      <Address>09550010</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+</CheatTable>
