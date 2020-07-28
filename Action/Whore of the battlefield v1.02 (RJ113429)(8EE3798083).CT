@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"HP stay at 100"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : game.exe
+  Version: 
+  Date   : 2018-02-25
+  Author : LustWolf
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(hp,game.exe,0F BF 41 58 8B E5) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov [ecx+58],64
+  movsx eax,word ptr [ecx+58]
+  mov esp,ebp
+  jmp return
+
+hp:
+  jmp newmem
+  nop
+return:
+registersymbol(hp)
+
+[DISABLE]
+
+hp:
+  db 0F BF 41 58 8B E5
+
+unregistersymbol(hp)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "game.exe"+C3FA8
+
+"game.exe"+C3F90: 55                    -  push ebp
+"game.exe"+C3F91: 8B EC                 -  mov ebp,esp
+"game.exe"+C3F93: 51                    -  push ecx
+"game.exe"+C3F94: 6A 64                 -  push 64
+"game.exe"+C3F96: 8B 45 08              -  mov eax,[ebp+08]
+"game.exe"+C3F99: 50                    -  push eax
+"game.exe"+C3F9A: E8 71 2D FF FF        -  call game.exe+B6D10
+"game.exe"+C3F9F: 83 C4 08              -  add esp,08
+"game.exe"+C3FA2: 89 45 FC              -  mov [ebp-04],eax
+"game.exe"+C3FA5: 8B 4D FC              -  mov ecx,[ebp-04]
+// ---------- INJECTING HERE ----------
+"game.exe"+C3FA8: 0F BF 41 58           -  movsx eax,word ptr [ecx+58]
+"game.exe"+C3FAC: 8B E5                 -  mov esp,ebp
+// ---------- DONE INJECTING  ----------
+"game.exe"+C3FAE: 5D                    -  pop ebp
+"game.exe"+C3FAF: C3                    -  ret 
+"game.exe"+C3FB0: 55                    -  push ebp
+"game.exe"+C3FB1: 8B EC                 -  mov ebp,esp
+"game.exe"+C3FB3: 51                    -  push ecx
+"game.exe"+C3FB4: 6A 64                 -  push 64
+"game.exe"+C3FB6: 8B 45 08              -  mov eax,[ebp+08]
+"game.exe"+C3FB9: 50                    -  push eax
+"game.exe"+C3FBA: E8 51 2D FF FF        -  call game.exe+B6D10
+"game.exe"+C3FBF: 83 C4 08              -  add esp,08
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Money"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>game.exe+E5B2EC</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>7</ID>
+      <Description>"find struggle meter (lower the meter a few times to activate)"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : game.exe
+  Version: 
+  Date   : 2018-02-25
+  Author : LustWolf
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(sexmeter,game.exe,66 89 41 3C 8B 55 B0) // should be unique
+alloc(newmem,$1000)
+globalalloc(_sexmeter,8)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov [ecx+3C],ax
+  mov [_sexmeter],ecx
+  mov edx,[ebp-50]
+  jmp return
+
+sexmeter:
+  jmp newmem
+  nop
+  nop
+return:
+registersymbol(sexmeter)
+
+[DISABLE]
+
+sexmeter:
+  db 66 89 41 3C 8B 55 B0
+
+unregistersymbol(sexmeter)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "game.exe"+C4678
+
+"game.exe"+C464B: EB 0A                          -  jmp game.exe+C4657
+"game.exe"+C464D: C7 85 00 FE FF FF 01 00 00 00  -  mov [ebp-00000200],00000001
+"game.exe"+C4657: 8B 8D 00 FE FF FF              -  mov ecx,[ebp-00000200]
+"game.exe"+C465D: 89 4D 8C                       -  mov [ebp-74],ecx
+"game.exe"+C4660: 83 7D 8C 00                    -  cmp dword ptr [ebp-74],00
+"game.exe"+C4664: 0F 84 94 00 00 00              -  je game.exe+C46FE
+"game.exe"+C466A: 8B 55 B0                       -  mov edx,[ebp-50]
+"game.exe"+C466D: 66 8B 42 3C                    -  mov ax,[edx+3C]
+"game.exe"+C4671: 66 83 E8 01                    -  sub ax,01
+"game.exe"+C4675: 8B 4D B0                       -  mov ecx,[ebp-50]
+// ---------- INJECTING HERE ----------
+"game.exe"+C4678: 66 89 41 3C                    -  mov [ecx+3C],ax
+"game.exe"+C467C: 8B 55 B0                       -  mov edx,[ebp-50]
+// ---------- DONE INJECTING  ----------
+"game.exe"+C467F: 0F BF 42 3C                    -  movsx eax,word ptr [edx+3C]
+"game.exe"+C4683: 85 C0                          -  test eax,eax
+"game.exe"+C4685: 75 77                          -  jne game.exe+C46FE
+"game.exe"+C4687: 8B 4D B0                       -  mov ecx,[ebp-50]
+"game.exe"+C468A: 83 C1 24                       -  add ecx,24
+"game.exe"+C468D: 8B 55 B0                       -  mov edx,[ebp-50]
+"game.exe"+C4690: 83 C2 18                       -  add edx,18
+"game.exe"+C4693: 8B 01                          -  mov eax,[ecx]
+"game.exe"+C4695: 89 02                          -  mov [edx],eax
+"game.exe"+C4697: 8B 41 04                       -  mov eax,[ecx+04]
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>6</ID>
+          <Description>"Struggle Meter (press 0 for low bar)"</Description>
+          <VariableType>2 Bytes</VariableType>
+          <Address>[_sexmeter]+3c</Address>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>48</Key>
+              </Keys>
+              <Value>1</Value>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_sexmeter</Name>
+      <Address>04B20000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+</CheatTable>

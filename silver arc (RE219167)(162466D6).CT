@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"inf hp and find it"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : wolp_trial_e.exe (paused)
+  Version: 
+  Date   : 2018-04-09
+  Author : LustWolf
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(hp,wolp_game_e.exe,89 8E 05 DF 00 00) // should be unique
+alloc(newmem,$1000)
+globalalloc(_hp,8)
+_hp:
+  db 0
+
+label(code)
+label(return)
+
+newmem:
+  pushf
+  cmp dword ptr[esi+10],"wolp"
+  jne code
+  //push ebx
+  //lea ebx,[esi+df25]
+  mov [_hp],esi
+  //pop ebx
+  popf
+  jmp return
+
+code:
+  popf
+  mov [esi+0000DF05],ecx
+  jmp return
+
+hp:
+  jmp newmem
+  nop
+return:
+registersymbol(hp)
+
+[DISABLE]
+
+hp:
+  db 89 8E 05 DF 00 00
+
+unregistersymbol(hp)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "wolp_trial_e.exe"+EA7F
+
+"wolp_trial_e.exe"+EA6B: 5D                             -  pop ebp
+"wolp_trial_e.exe"+EA6C: 5B                             -  pop ebx
+"wolp_trial_e.exe"+EA6D: C3                             -  ret 
+"wolp_trial_e.exe"+EA6E: 5F                             -  pop edi
+"wolp_trial_e.exe"+EA6F: 5E                             -  pop esi
+"wolp_trial_e.exe"+EA70: C7 03 01 00 00 00              -  mov [ebx],00000001
+"wolp_trial_e.exe"+EA76: 5D                             -  pop ebp
+"wolp_trial_e.exe"+EA77: 5B                             -  pop ebx
+"wolp_trial_e.exe"+EA78: C3                             -  ret 
+"wolp_trial_e.exe"+EA79: 8B 96 25 DF 00 00              -  mov edx,[esi+0000DF25]
+// ---------- INJECTING HERE ----------
+"wolp_trial_e.exe"+EA7F: 89 8E 05 DF 00 00              -  mov [esi+0000DF05],ecx
+// ---------- DONE INJECTING  ----------
+"wolp_trial_e.exe"+EA85: 2B D0                          -  sub edx,eax
+"wolp_trial_e.exe"+EA87: C7 86 29 DF 00 00 14 00 00 00  -  mov [esi+0000DF29],00000014
+"wolp_trial_e.exe"+EA91: 89 96 25 DF 00 00              -  mov [esi+0000DF25],edx
+"wolp_trial_e.exe"+EA97: 79 06                          -  jns wolp_trial_e.exe+EA9F
+"wolp_trial_e.exe"+EA99: 89 AE 25 DF 00 00              -  mov [esi+0000DF25],ebp
+"wolp_trial_e.exe"+EA9F: 3B CF                          -  cmp ecx,edi
+"wolp_trial_e.exe"+EAA1: 7E 06                          -  jle wolp_trial_e.exe+EAA9
+"wolp_trial_e.exe"+EAA3: 89 BE 05 DF 00 00              -  mov [esi+0000DF05],edi
+"wolp_trial_e.exe"+EAA9: 5F                             -  pop edi
+"wolp_trial_e.exe"+EAAA: 5E                             -  pop esi
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>3</ID>
+          <Description>"hp"</Description>
+          <LastState Value="200" RealAddress="004DFC85"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+DF05</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"power shot (static)"</Description>
+      <LastState Value="2" Activated="1" RealAddress="004DFC95"/>
+      <VariableType>Byte</VariableType>
+      <Address>wolp_game_e.exe+DFC95</Address>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_hp</Name>
+      <Address>04500000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+  <Structures StructVersion="2">
+    <Structure Name="unnamed structure" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="0" Vartype="Byte" Bytesize="1" RLECount="3" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="3" Vartype="4 Bytes" Bytesize="4" RLECount="5" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="23" Vartype="4 Bytes" Bytesize="4" RLECount="2" DisplayMethod="Hexadecimal"/>
+        <Element Offset="31" Vartype="4 Bytes" Bytesize="4" RLECount="7" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="59" Vartype="Pointer" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="63" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Hexadecimal"/>
+        <Element Offset="67" Vartype="4 Bytes" Bytesize="4" RLECount="8" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="99" Vartype="Float" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="103" Vartype="4 Bytes" Bytesize="4" RLECount="8" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="135" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Hexadecimal"/>
+        <Element Offset="139" Vartype="4 Bytes" Bytesize="4" RLECount="9" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="175" Vartype="4 Bytes" Bytesize="4" RLECount="2" DisplayMethod="Hexadecimal"/>
+        <Element Offset="183" Vartype="4 Bytes" Bytesize="4" RLECount="17" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="251" Vartype="Pointer" Bytesize="4" RLECount="2" PointerSize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="259" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="263" Vartype="Pointer" Bytesize="4" RLECount="2" PointerSize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="271" Vartype="4 Bytes" Bytesize="4" RLECount="5" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="291" Vartype="4 Bytes" Bytesize="4" RLECount="3" DisplayMethod="Hexadecimal"/>
+        <Element Offset="303" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="307" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Hexadecimal"/>
+        <Element Offset="311" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="315" Vartype="String" Bytesize="7" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="322" Vartype="Byte" Bytesize="1" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="323" Vartype="Pointer" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="327" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Hexadecimal"/>
+        <Element Offset="331" Vartype="String" Bytesize="5" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="336" Vartype="Byte" Bytesize="1" RLECount="3" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="339" Vartype="4 Bytes" Bytesize="4" RLECount="61" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="583" Vartype="4 Bytes" Bytesize="4" RLECount="4" DisplayMethod="Hexadecimal"/>
+        <Element Offset="599" Vartype="Pointer" Bytesize="4" RLECount="2" PointerSize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="607" Vartype="4 Bytes" Bytesize="4" RLECount="262" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="1655" Vartype="Pointer" Bytesize="4" RLECount="2" PointerSize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="1663" Vartype="4 Bytes" Bytesize="4" RLECount="262" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="2711" Vartype="Pointer" Bytesize="4" RLECount="2" PointerSize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="2719" Vartype="4 Bytes" Bytesize="4" RLECount="262" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="3767" Vartype="Pointer" Bytesize="4" RLECount="2" PointerSize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="3775" Vartype="4 Bytes" Bytesize="4" RLECount="80" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="4095" Vartype="Byte" Bytesize="1" DisplayMethod="Unsigned Integer"/>
+      </Elements>
+    </Structure>
+  </Structures>
+</CheatTable>

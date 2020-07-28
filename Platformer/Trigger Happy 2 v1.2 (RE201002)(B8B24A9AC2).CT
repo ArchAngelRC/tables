@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="28">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>21</ID>
+      <Description>"Find Ammo addy"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Game   : stdrt.exe
+// Version:
+// Date   :
+// Author : LustWolf
+
+[ENABLE]
+aobscanmodule(aob_ammodec,stdrt.exe,58 02 00 00 8B 0C 88 8B 82 2C 05 00 00) 
+alloc(newmem,1024,stdrt.exe)
+globalalloc(_ammo,8)
+_ammo:
+  db 0
+
+label(code)
+label(return)
+
+newmem:
+  pushf
+  push ebx
+  lea ebx,[eax+ecx*4]
+  mov [_ammo],ebx   //put address you're interested in seeing the value of here
+  pop ebx
+  jmp code
+
+code:
+  popf
+
+  mov ecx,[eax+ecx*4]
+  mov eax,[edx+0000052C]
+  jmp return
+
+aob_ammodec+04:
+  jmp newmem
+  nop
+  nop
+  nop
+  nop
+return:
+registersymbol(aob_ammodec)
+
+[DISABLE]
+aob_ammodec+04:
+  db 8B 0C 88 8B 82 2C 05 00 00
+
+unregistersymbol(aob_ammodec)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "stdrt.exe"+E65B
+
+"stdrt.exe"+E63B: CC                    -  int 3 
+"stdrt.exe"+E63C: CC                    -  int 3 
+"stdrt.exe"+E63D: CC                    -  int 3 
+"stdrt.exe"+E63E: CC                    -  int 3 
+"stdrt.exe"+E63F: CC                    -  int 3 
+"stdrt.exe"+E640: 8B 15 C4 24 1B 01     -  mov edx,[stdrt.exe+B24C4]
+"stdrt.exe"+E646: 8B 82 30 05 00 00     -  mov eax,[edx+00000530]
+"stdrt.exe"+E64C: 0F BF 48 06           -  movsx ecx,word ptr [eax+06]
+"stdrt.exe"+E650: A1 BC 24 1B 01        -  mov eax,[stdrt.exe+B24BC]
+"stdrt.exe"+E655: 8B 80 58 02 00 00     -  mov eax,[eax+00000258]
+// ---------- INJECTING HERE ----------
+"stdrt.exe"+E65B: 8B 0C 88              -  mov ecx,[eax+ecx*4]
+"stdrt.exe"+E65E: 8B 82 2C 05 00 00     -  mov eax,[edx+0000052C]
+// ---------- DONE INJECTING  ----------
+"stdrt.exe"+E664: F7 D1                 -  not ecx
+"stdrt.exe"+E666: 8B 84 82 34 05 00 00  -  mov eax,[edx+eax*4+00000534]
+"stdrt.exe"+E66D: C7 00 00 00 00 00     -  mov [eax],00000000
+"stdrt.exe"+E673: 89 48 08              -  mov [eax+08],ecx
+"stdrt.exe"+E676: C3                    -  ret 
+"stdrt.exe"+E677: CC                    -  int 3 
+"stdrt.exe"+E678: CC                    -  int 3 
+"stdrt.exe"+E679: CC                    -  int 3 
+"stdrt.exe"+E67A: CC                    -  int 3 
+"stdrt.exe"+E67B: CC                    -  int 3 
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>22</ID>
+          <Description>"Ammo (245 is 10)"</Description>
+          <LastState Value="245" Activated="1" RealAddress="031E63D8"/>
+          <VariableType>Byte</VariableType>
+          <Address>[_ammo]</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>25</ID>
+      <Description>"Find Player Base"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Game   : stdrt.exe
+// Version:
+// Date   :
+// Author : LustWolf
+
+[ENABLE]
+aobscanmodule(aob_playerbase,ibar.mfx,D9 80 C0 02 00 00 E8) 
+alloc(newmem,1024,ibar.mfx)
+globalalloc(_Heart,8)
+_Heart:
+  db 0
+globalalloc(_TH,8)
+_TH:
+  db 0
+globalalloc(_Smeter,8)
+_Smeter:
+  db 0
+globalalloc(_HP,8)
+_HP:
+  db 0
+globalalloc(_clothes,8)
+_clothes:
+  db 0
+
+label(code)
+label(return)
+label(notClothes)
+label(notHP)
+label(notSmeter)
+label(notHeart)
+
+newmem:
+  pushf
+  cmp [eax+54],#42
+  jne notClothes
+  //fstp st(0)
+  push ebx
+  lea ebx,[eax+000002C0]
+  mov [_clothes],ebx   //put address you're interested in seeing the value of here
+  pop ebx
+  jmp code
+
+notClothes:
+  cmp [eax+54],#29
+  jne notHP
+  //fstp st(0)
+  push ebx
+  lea ebx,[eax+000002C0]
+  mov [_HP],ebx   //put address you're interested in seeing the value of here
+  pop ebx
+  jmp code
+
+notHP:
+  cmp [eax+54],#19
+  jne notSmeter
+  //fstp st(0)
+  push ebx
+  lea ebx,[eax+000002C0]
+  mov [_Smeter],ebx   //put address you're interested in seeing the value of here
+  pop ebx
+  jmp code
+
+notSmeter:
+  cmp [eax+54],#47
+  jne notHeart
+  //fstp st(0)
+  push ebx
+  lea ebx,[eax+000002C0]
+  mov [_TH],ebx   //put address you're interested in seeing the value of here
+  pop ebx
+  jmp code
+
+notHeart:
+  cmp [eax+54],#6
+  jne code
+  //fstp st(0)
+  push ebx
+  lea ebx,[eax+000002C0]
+  mov [_Heart],ebx   //put address you're interested in seeing the value of here
+  pop ebx
+  jmp code
+
+code:
+  popf
+
+  fld dword ptr [eax+000002C0]
+  jmp return
+
+aob_playerbase:
+  jmp newmem
+  nop
+return:
+registersymbol(aob_playerbase)
+
+[DISABLE]
+aob_playerbase:
+  db D9 80 C0 02 00 00
+
+unregistersymbol(aob_playerbase)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "ibar.mfx"+167F
+
+"ibar.mfx"+165F: C2 08 00              -  ret 0008
+"ibar.mfx"+1662: 0F BF 54 24 08        -  movsx edx,word ptr [esp+08]
+"ibar.mfx"+1667: 8B 44 24 04           -  mov eax,[esp+04]
+"ibar.mfx"+166B: 8B 48 08              -  mov ecx,[eax+08]
+"ibar.mfx"+166E: 52                    -  push edx
+"ibar.mfx"+166F: FF 74 24 10           -  push [esp+10]
+"ibar.mfx"+1673: 50                    -  push eax
+"ibar.mfx"+1674: FF 91 70 03 00 00     -  call dword ptr [ecx+00000370]
+"ibar.mfx"+167A: C3                    -  ret 
+"ibar.mfx"+167B: 8B 44 24 04           -  mov eax,[esp+04]
+// ---------- INJECTING HERE ----------
+"ibar.mfx"+167F: D9 80 C0 02 00 00     -  fld dword ptr [eax+000002C0]
+// ---------- DONE INJECTING  ----------
+"ibar.mfx"+1685: E8 D6 1A 00 00        -  call ibar.mfx+3160
+"ibar.mfx"+168A: C2 0C 00              -  ret 000C
+"ibar.mfx"+168D: 55                    -  push ebp
+"ibar.mfx"+168E: 8B EC                 -  mov ebp,esp
+"ibar.mfx"+1690: 51                    -  push ecx
+"ibar.mfx"+1691: 56                    -  push esi
+"ibar.mfx"+1692: 8B 75 08              -  mov esi,[ebp+08]
+"ibar.mfx"+1695: 8B 46 08              -  mov eax,[esi+08]
+"ibar.mfx"+1698: 6A 00                 -  push 00
+"ibar.mfx"+169A: 6A 02                 -  push 02
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>26</ID>
+          <Description>"Clothes (100 full)"</Description>
+          <LastState Value="100" Activated="1" RealAddress="09175E30"/>
+          <VariableType>Float</VariableType>
+          <Address>[_clothes]</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>27</ID>
+          <Description>"HP (100 Full)"</Description>
+          <LastState Value="100" Activated="1" RealAddress="07C47EE8"/>
+          <VariableType>Float</VariableType>
+          <Address>[_HP]</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>28</ID>
+          <Description>"S Meter (0 none, increases)(press INS to pause)"</Description>
+          <LastState Value="0" RealAddress="096AAB68"/>
+          <VariableType>Float</VariableType>
+          <Address>[_Smeter]</Address>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>45</Key>
+              </Keys>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>29</ID>
+          <Description>"Heart"</Description>
+          <LastState Value="30" RealAddress="09AA0B58"/>
+          <VariableType>Float</VariableType>
+          <Address>[_Heart]</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>30</ID>
+          <Description>"TH"</Description>
+          <LastState Value="6" RealAddress="09A44BD0"/>
+          <VariableType>Float</VariableType>
+          <Address>[_TH]</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_hero</Name>
+      <Address>06220010</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_ammo</Name>
+      <Address>02A50000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_clothes</Name>
+      <Address>02A50050</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_HP</Name>
+      <Address>02A50040</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_Something</Name>
+      <Address>03580030</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_Heart</Name>
+      <Address>02A50010</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_Smeter</Name>
+      <Address>02A50030</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_TH</Name>
+      <Address>02A50020</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+  <Comments>ammo: byte, 245 is 10, goes to 255 to become empty
+
+Everything else is float (HP+Clothes 100 full)
+
+Messed up the script labels, but whatever
+</Comments>
+</CheatTable>
