@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="32">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"find hp"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Game   : MineDungeon2.exe
+// Version:
+// Date   :
+// Author : LustWolf
+//NOTES:
+// Note: when in 32 bit mode you should use PUSHFD and POPFD to manipulate the full 32 bits of the EFlags registry. 
+// Note: when in 64 bit mode you should use PUSHFQ and POPFQ to manipulate the full 32 bits of the EFlags registry.
+[ENABLE]
+aobscanmodule(aob_hp,MineDungeon2.exe,83 39 00 0F 9E C0) 
+alloc(newmem,1024,MineDungeon2.exe)
+globalalloc(_hp,8)
+_hp:
+  dq 0 //dq used to take care of 64-bit apps too
+
+label(code)
+label(return)
+
+newmem:
+  //pushfd //uncomment if comparing
+  
+  mov [_hp],ecx   //put address you're interested in seeing the value of here (Injection Copy)
+  
+  jmp code
+
+code:
+  //popfd //uncomment if comparing
+
+  cmp dword ptr [ecx],00
+  setle al
+  jmp return
+
+aob_hp:
+  jmp newmem
+  nop
+return:
+registersymbol(aob_hp)
+
+[DISABLE]
+aob_hp:
+  db 83 39 00 0F 9E C0
+
+unregistersymbol(aob_hp)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: MineDungeon2.exe+626D0
+
+MineDungeon2.exe+62695: 8B 4D FC              - mov ecx,[ebp-04]
+MineDungeon2.exe+62698: 8B 91 48 04 00 00     - mov edx,[ecx+00000448]
+MineDungeon2.exe+6269E: 8D 44 02 64           - lea eax,[edx+eax+64]
+MineDungeon2.exe+626A2: 89 45 F4              - mov [ebp-0C],eax
+MineDungeon2.exe+626A5: 33 C9                 - xor ecx,ecx
+MineDungeon2.exe+626A7: 7C 1B                 - jl MineDungeon2.exe+626C4
+MineDungeon2.exe+626A9: 8B 55 F4              - mov edx,[ebp-0C]
+MineDungeon2.exe+626AC: 83 7A 08 00           - cmp dword ptr [edx+08],00
+MineDungeon2.exe+626B0: 7E 12                 - jle MineDungeon2.exe+626C4
+MineDungeon2.exe+626B2: 33 C0                 - xor eax,eax
+MineDungeon2.exe+626B4: C1 E0 02              - shl eax,02
+MineDungeon2.exe+626B7: 8B 4D F4              - mov ecx,[ebp-0C]
+MineDungeon2.exe+626BA: 03 41 04              - add eax,[ecx+04]
+MineDungeon2.exe+626BD: 89 45 F0              - mov [ebp-10],eax
+MineDungeon2.exe+626C0: EB 0B                 - jmp MineDungeon2.exe+626CD
+MineDungeon2.exe+626C2: EB 09                 - jmp MineDungeon2.exe+626CD
+MineDungeon2.exe+626C4: 8B 55 F4              - mov edx,[ebp-0C]
+MineDungeon2.exe+626C7: 8B 42 04              - mov eax,[edx+04]
+MineDungeon2.exe+626CA: 89 45 F0              - mov [ebp-10],eax
+MineDungeon2.exe+626CD: 8B 4D F0              - mov ecx,[ebp-10]
+// ---------- INJECTING HERE ----------
+MineDungeon2.exe+626D0: 83 39 00              - cmp dword ptr [ecx],00
+// ---------- DONE INJECTING  ----------
+MineDungeon2.exe+626D3: 0F 9E C0              - setle al
+MineDungeon2.exe+626D6: 8B E5                 - mov esp,ebp
+MineDungeon2.exe+626D8: 5D                    - pop ebp
+MineDungeon2.exe+626D9: C3                    - ret 
+MineDungeon2.exe+626DA: CC                    - int 3 
+MineDungeon2.exe+626DB: CC                    - int 3 
+MineDungeon2.exe+626DC: CC                    - int 3 
+MineDungeon2.exe+626DD: CC                    - int 3 
+MineDungeon2.exe+626DE: CC                    - int 3 
+MineDungeon2.exe+626DF: CC                    - int 3 
+MineDungeon2.exe+626E0: 55                    - push ebp
+MineDungeon2.exe+626E1: 8B EC                 - mov ebp,esp
+MineDungeon2.exe+626E3: 83 EC 0C              - sub esp,0C
+MineDungeon2.exe+626E6: C7 45 F4 CC CC CC CC  - mov [ebp-0C],CCCCCCCC
+MineDungeon2.exe+626ED: C7 45 F8 CC CC CC CC  - mov [ebp-08],CCCCCCCC
+MineDungeon2.exe+626F4: C7 45 FC CC CC CC CC  - mov [ebp-04],CCCCCCCC
+MineDungeon2.exe+626FB: 89 4D FC              - mov [ebp-04],ecx
+MineDungeon2.exe+626FE: 68 00 01 00 00        - push 00000100
+MineDungeon2.exe+62703: 8B 4D FC              - mov ecx,[ebp-04]
+MineDungeon2.exe+62706: E8 35 28 FE FF        - call MineDungeon2.exe+44F40
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"300 full - 50 per half heart"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_marker</Name>
+      <Address>03600000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_magic</Name>
+      <Address>03600010</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_hp</Name>
+      <Address>02DB0000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+</CheatTable>
