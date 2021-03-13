@@ -18,9 +18,12 @@ Ex: `Game v1.23 (RE123456)(1234567890).CT`
 
 ### Lazy Method: Generate truncated MD5 via PowerShell (copy+paste into prompt):
 ```powershell
-$ans = read-host "Paste full game .exe path"
-$ans = $ans -replace '"', ""
-$file = ls $ans
-$($(Get-FileHash $file.FullName -Algorithm MD5).Hash).substring(22,10)
+function gen-trunc-hash {
+ $ans = read-host "Paste full game .exe path"
+ $ans = $ans -replace '"', ""
+ $file = ls $ans
+ $($(Get-FileHash $file.FullName -Algorithm MD5).Hash).substring(22,10)
+}
+gen-trunc-hash
  
 ```
