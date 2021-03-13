@@ -26,7 +26,9 @@ function gen-trunc-hash {
     $hash = $($(Get-FileHash $file.FullName -Algorithm MD5).Hash).substring(22,10)
     $version = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($file.FullName).FileVersion
     $name = $file.BaseName
-    $suggestedName = $name + " v" + $version + " (DLSiteid)($($hash))"
+
+    IF($version.trim() -ne "") {$suggestedName = $name + " v" + $version + " (DLSiteid)($($hash))"}
+        else {$suggestedName = $name + " (DLSiteid)($($hash))"}
     write-host "Suggested Name:"
     write-host -fore cyan "`t$($suggestedName)"
 }
