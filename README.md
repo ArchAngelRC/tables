@@ -1,7 +1,10 @@
 
 Cheat Engine tables for NSFW Games
 
+The tables can always be done better...pending laziness; goal is usually just to get it working.
+
 Feel free to share, edit or modify these tables.
+
 
 To use, download the .CH file, open it in Cheat Engine, and attach to the associated game.
 
@@ -16,7 +19,7 @@ Ex: `Game v1.23 (RE123456)(1234567890).CT`
 
 **Note**: I'm using the MD5 part mostly for myself to verify I have the right file at a glance. Truncated for file name size. Not concerned about collisions.
 
-### Lazy Method: Generate truncated MD5 via PowerShell (copy+paste into prompt):
+### Lazy Method with input prompt: Generate truncated MD5 via PowerShell (just copy+paste into PowerShell prompt):
 ```powershell
 function gen-trunc-hash {
     $ans = read-host "Paste full game .exe path"
