@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="42">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"find hp"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Game   : EroTrapSweeper.exe
+// Version:
+// Date   :
+// Author : LustWolf
+//NOTES:
+// Note: when in 32 bit mode you should use PUSHFD and POPFD to manipulate the full 32 bits of the EFlags registry. 
+// Note: when in 64 bit mode you should use PUSHFQ and POPFQ to manipulate the full 32 bits of the EFlags registry.
+[ENABLE]
+aobscan(aob_hp,8B 40 0C 85 C0 7D) 
+alloc(newmem,1024)
+globalalloc(_hp,8)
+_hp:
+  dq 0 //dq used to take care of 64-bit apps too
+
+globalalloc(_player,8)
+_player:
+  dq 0 //dq used to take care of 64-bit apps too
+
+label(code)
+label(return)
+
+newmem:
+  //pushfd //uncomment if comparing
+  push edx
+  lea edx,[eax+0C]
+  mov [_hp],edx   //put address you're interested in seeing the value of here (Injection Copy)
+
+  lea edx,[eax]
+  mov [_player],edx
+
+  pop edx
+
+
+  jmp checkvalues
+
+checkvalues:
+  pushfd
+  cmp [eax+24],#2  //vag compare
+  jl checkanal
+  mov [eax+24],1 // dec by 1 if it hits higher than 1
+  jmp checkanal
+
+checkanal:
+  cmp [eax+28],#2  //anal compare
+  jl code
+  mov [eax+28],1 // dec by 1 if it hits higher than 1
+  jmp code
+
+code:
+  popfd //uncomment if comparing
+
+  mov eax,[eax+0C]
+  test eax,eax
+  jmp return
+
+aob_hp:
+  jmp newmem
+return:
+registersymbol(aob_hp)
+
+[DISABLE]
+aob_hp:
+  db 8B 40 0C 85 C0
+
+unregistersymbol(*)
+dealloc(*)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 1A57ABE2
+
+1A57ABBE: 90                       -  nop 
+1A57ABBF: E8 3C B4 FE FF           -  call 1A566000
+1A57ABC4: 8B 47 14                 -  mov eax,[edi+14]
+1A57ABC7: C7 44 24 04 01 00 00 00  -  mov [esp+04],00000001
+1A57ABCF: 89 04 24                 -  mov [esp],eax
+1A57ABD2: 39 00                    -  cmp [eax],eax
+1A57ABD4: 8D 6D 00                 -  lea ebp,[ebp+00]
+1A57ABD7: E8 24 B4 FE FF           -  call 1A566000
+1A57ABDC: 8B 47 0C                 -  mov eax,[edi+0C]
+1A57ABDF: 8B 40 0C                 -  mov eax,[eax+0C]
+// ---------- INJECTING HERE ----------
+1A57ABE2: 8B 40 0C                 -  mov eax,[eax+0C]
+1A57ABE5: 85 C0                    -  test eax,eax
+// ---------- DONE INJECTING  ----------
+1A57ABE7: 7D 0F                    -  jnl 1A57ABF8
+1A57ABE9: 8B 47 0C                 -  mov eax,[edi+0C]
+1A57ABEC: 8B 40 0C                 -  mov eax,[eax+0C]
+1A57ABEF: C7 40 0C 00 00 00 00     -  mov [eax+0C],00000000
+1A57ABF6: EB 28                    -  jmp 1A57AC20
+1A57ABF8: 8B 47 0C                 -  mov eax,[edi+0C]
+1A57ABFB: 8B 40 0C                 -  mov eax,[eax+0C]
+1A57ABFE: 8B 40 0C                 -  mov eax,[eax+0C]
+1A57AC01: 8B 4F 0C                 -  mov ecx,[edi+0C]
+1A57AC04: 8B 49 0C                 -  mov ecx,[ecx+0C]
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>37</ID>
+          <Description>"Player Base"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>_player</Address>
+          <Offsets>
+            <Offset>0</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>39</ID>
+          <Description>"Items (anything gt 0 puts it in inv)"</Description>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>38</ID>
+              <Description>"ItemArray"</Description>
+              <ShowAsHex>1</ShowAsHex>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>_player</Address>
+              <Offsets>
+                <Offset>8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>40</ID>
+              <Description>"hp"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>_player</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>10</Offset>
+                <Offset>8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>41</ID>
+              <Description>"mp"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>_player</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>14</Offset>
+                <Offset>8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>42</ID>
+              <Description>"elixir full mp hp"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>_player</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>18</Offset>
+                <Offset>8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>46</ID>
+              <Description>"tranq"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>_player</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>1C</Offset>
+                <Offset>8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>47</ID>
+              <Description>"contraseptive"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>_player</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>20</Offset>
+                <Offset>8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>48</ID>
+              <Description>"witch outfit"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>_player</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>24</Offset>
+                <Offset>8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>49</ID>
+              <Description>"empty bottle for urine"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>_player</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>28</Offset>
+                <Offset>8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>50</ID>
+              <Description>"urine"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>_player</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>2C</Offset>
+                <Offset>8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>51</ID>
+              <Description>"milking machine"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>_player</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>30</Offset>
+                <Offset>8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>52</ID>
+              <Description>"witches milk"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>_player</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>34</Offset>
+                <Offset>8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>53</ID>
+              <Description>"reveal all chests"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[_player]+8</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>50</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>54</ID>
+              <Description>"inf time book"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[_player]+8</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>4C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>55</ID>
+              <Description>"lay egg now"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[_player]+8</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>38</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>56</ID>
+              <Description>"egg"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[_player]+8</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>3C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>62</ID>
+              <Description>"immature egg"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[_player]+8</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>40</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>58</ID>
+              <Description>"heal, cure, repair"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[_player]+8</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>5C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>57</ID>
+              <Description>"auto retry when defeated"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[_player]+8</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>58</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>59</ID>
+              <Description>"destroy all traps"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[_player]+8</Address>
+              <Offsets>
+                <Offset>C</Offset>
+                <Offset>60</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"hp"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>3</ID>
+          <Description>"Max HP"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"mp"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>5</ID>
+          <Description>"max mp"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+c</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>6</ID>
+          <Description>"H level (score)"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+10</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>8</ID>
+          <Description>"clt sen lvl"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+14</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>18</ID>
+          <Description>"v sen lvl"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+14+4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>13</ID>
+          <Description>"anal sen lvl"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+14+8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>14</ID>
+          <Description>"breast sen lvl"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+14+8+4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>21</ID>
+          <Description>"c sen bar related (4 per seg)"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+14+8+4+4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>22</ID>
+          <Description>"v sen bar related (4 per seg)"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+14+8+4+4+4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>10</ID>
+          <Description>"excite lvl"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+14+20</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>24</ID>
+          <Description>"ur lvl"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+14+20+4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>20</ID>
+          <Description>"sperm lvl"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+14+20+c</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>28</ID>
+          <Description>"Preg bar (10 per seg)"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+14+20+c+4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>31</ID>
+          <Description>"exhibitionism"</Description>
+          <DropDownList DisplayValueAsItem="1">1:yes
+0:no
+</DropDownList>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+14+20+c+4+4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>32</ID>
+          <Description>"nymphomania"</Description>
+          <DropDownList DisplayValueAsItem="1">1:yes
+0:no
+</DropDownList>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+14+20+c+4+4+4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>33</ID>
+          <Description>"ur addict"</Description>
+          <DropDownList DisplayValueAsItem="1">1:yes
+0:No
+</DropDownList>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+14+20+c+4+4+4+4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>34</ID>
+          <Description>"milking addict"</Description>
+          <DropDownList DisplayValueAsItem="1">1:yes
+0:no
+</DropDownList>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+14+20+c+4+4+4+4+4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>35</ID>
+          <Description>"spawning addict"</Description>
+          <DropDownList DisplayValueAsItem="1">1:yes
+0:no
+</DropDownList>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+14+20+c+4+4+4+4+4+4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>36</ID>
+          <Description>"naked (1 yes, 0 no)"</Description>
+          <DropDownList DisplayValueAsItem="1">1:yes
+0:no
+</DropDownList>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+14+20+c+4+4+4+4+4+4+4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>43</ID>
+          <Description>"estrus sigil - lust"</Description>
+          <DropDownList DisplayValueAsItem="1">1:yes
+0:no
+</DropDownList>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>_player</Address>
+          <Offsets>
+            <Offset>6C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>44</ID>
+          <Description>"big boobs"</Description>
+          <DropDownList DisplayValueAsItem="1">1:yes
+0:no
+</DropDownList>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>_player</Address>
+          <Offsets>
+            <Offset>70</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>45</ID>
+          <Description>"virgin"</Description>
+          <DropDownList DisplayValueAsItem="1">1:yes
+0:No
+</DropDownList>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>_player</Address>
+          <Offsets>
+            <Offset>74</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>15</ID>
+      <Description>"find timer"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Game   : EroTrapSweeper.exe
+// Version:
+// Date   :
+// Author : LustWolf
+//NOTES:
+// Note: when in 32 bit mode you should use PUSHFD and POPFD to manipulate the full 32 bits of the EFlags registry. 
+// Note: when in 64 bit mode you should use PUSHFQ and POPFQ to manipulate the full 32 bits of the EFlags registry.
+
+// edi+14 or eax+14 could be max time
+[ENABLE]
+aobscan(aob_time,8B 40 58 89 45 E0 C7) 
+alloc(newmem,1024)
+globalalloc(_time,8)
+_time:
+  dq 0 //dq used to take care of 64-bit apps too
+
+label(code)
+label(return)
+
+newmem:
+  //pushfd //uncomment if comparing
+  push edx
+  lea edx,[eax+58]
+  mov [_time],edx   //put address you're interested in seeing the value of here (Injection Copy)
+  pop edx
+  jmp code
+
+code:
+  //popfd //uncomment if comparing
+
+  mov eax,[eax+58]
+  mov [ebp-20],eax
+  jmp return
+
+aob_time:
+  jmp newmem
+  nop
+return:
+registersymbol(aob_time)
+
+[DISABLE]
+aob_time:
+  db 8B 40 58 89 45 E0
+
+unregistersymbol(aob_time)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 1A57CE14
+
+1A57CDF4: 39 00                    -  cmp [eax],eax
+1A57CDF6: 90                       -  nop 
+1A57CDF7: E8 F4 79 FE FF           -  call 1A5647F0
+1A57CDFC: 8B 47 0C                 -  mov eax,[edi+0C]
+1A57CDFF: 0F B6 40 46              -  movzx eax,byte ptr [eax+46]
+1A57CE03: 85 C0                    -  test eax,eax
+1A57CE05: 0F 85 73 00 00 00        -  jne 1A57CE7E
+1A57CE0B: 8B 47 14                 -  mov eax,[edi+14]
+1A57CE0E: 89 45 EC                 -  mov [ebp-14],eax
+1A57CE11: 8B 47 0C                 -  mov eax,[edi+0C]
+// ---------- INJECTING HERE ----------
+1A57CE14: 8B 40 58                 -  mov eax,[eax+58]
+1A57CE17: 89 45 E0                 -  mov [ebp-20],eax
+// ---------- DONE INJECTING  ----------
+1A57CE1A: C7 04 24 68 FE 3E 01     -  mov [esp],013EFE68
+1A57CE21: 8B C0                    -  mov eax,eax
+1A57CE23: E8 B8 41 C5 E8           -  call 031D0FE0
+1A57CE28: 8B 4D E0                 -  mov ecx,[ebp-20]
+1A57CE2B: 89 48 08                 -  mov [eax+08],ecx
+1A57CE2E: 89 45 E8                 -  mov [ebp-18],eax
+1A57CE31: 8B 47 0C                 -  mov eax,[edi+0C]
+1A57CE34: 8B 40 5C                 -  mov eax,[eax+5C]
+1A57CE37: 89 45 E4                 -  mov [ebp-1C],eax
+1A57CE3A: C7 04 24 68 FE 3E 01     -  mov [esp],013EFE68
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>16</ID>
+          <Description>"time"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>_time</Address>
+          <Offsets>
+            <Offset>0</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_hp</Name>
+      <Address>11360000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_time</Name>
+      <Address>11360010</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_marker</Name>
+      <Address>1BA70020</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_inventory_page</Name>
+      <Address>1BA70030</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_player</Name>
+      <Address>11360020</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_enemytype</Name>
+      <Address>11360030</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+</CheatTable>
