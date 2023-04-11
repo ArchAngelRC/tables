@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="32">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"Find MP"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Game   : Succubus_sword_ver_E100.exe
+// Version:
+// Date   :
+// Author : LustWolf
+
+[ENABLE]
+aobscanmodule(aob_basekinda,Succubus_sword_ver_E100.exe,8B 40 08 89 42 08 C3 CC CC 8B) 
+alloc(newmem,1024,Succubus_sword_ver_E100.exe)
+globalalloc(_mp,8)
+_mp:
+  db 0
+
+label(code)
+label(return)
+
+newmem:
+  pushf
+  cmp [eax+38],#800
+  jne code
+  mov [_mp],eax   //put address you're interested in seeing the value of here
+  
+  jmp code
+
+code:
+  popf
+
+  mov eax,[eax+08]
+  mov [edx+08],eax
+  jmp return
+
+aob_basekinda:
+  jmp newmem
+  nop
+return:
+registersymbol(aob_basekinda)
+
+[DISABLE]
+aob_basekinda:
+  db 8B 40 08 89 42 08
+
+unregistersymbol(aob_basekinda)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "Succubus_sword_ver_E100.exe"+119E7
+
+"Succubus_sword_ver_E100.exe"+119CF: 89 0A                 -  mov [edx],ecx
+"Succubus_sword_ver_E100.exe"+119D1: 83 E9 00              -  sub ecx,00
+"Succubus_sword_ver_E100.exe"+119D4: 74 11                 -  je Succubus_sword_ver_E100.exe+119E7
+"Succubus_sword_ver_E100.exe"+119D6: 49                    -  dec ecx
+"Succubus_sword_ver_E100.exe"+119D7: 74 0E                 -  je Succubus_sword_ver_E100.exe+119E7
+"Succubus_sword_ver_E100.exe"+119D9: 49                    -  dec ecx
+"Succubus_sword_ver_E100.exe"+119DA: 75 11                 -  jne Succubus_sword_ver_E100.exe+119ED
+"Succubus_sword_ver_E100.exe"+119DC: F2 0F 10 40 08        -  movsd xmm0,[eax+08]
+"Succubus_sword_ver_E100.exe"+119E1: F2 0F 11 42 08        -  movsd [edx+08],xmm0
+"Succubus_sword_ver_E100.exe"+119E6: C3                    -  ret 
+// ---------- INJECTING HERE ----------
+"Succubus_sword_ver_E100.exe"+119E7: 8B 40 08              -  mov eax,[eax+08]
+"Succubus_sword_ver_E100.exe"+119EA: 89 42 08              -  mov [edx+08],eax
+// ---------- DONE INJECTING  ----------
+"Succubus_sword_ver_E100.exe"+119ED: C3                    -  ret 
+"Succubus_sword_ver_E100.exe"+119EE: CC                    -  int 3 
+"Succubus_sword_ver_E100.exe"+119EF: CC                    -  int 3 
+"Succubus_sword_ver_E100.exe"+119F0: 8B 15 D4 49 34 00     -  mov edx,[Succubus_sword_ver_E100.exe+B49D4]
+"Succubus_sword_ver_E100.exe"+119F6: 8B 82 30 05 00 00     -  mov eax,[edx+00000530]
+"Succubus_sword_ver_E100.exe"+119FC: 0F BF 48 04           -  movsx ecx,word ptr [eax+04]
+"Succubus_sword_ver_E100.exe"+11A00: 03 C8                 -  add ecx,eax
+"Succubus_sword_ver_E100.exe"+11A02: 89 8A 30 05 00 00     -  mov [edx+00000530],ecx
+"Succubus_sword_ver_E100.exe"+11A08: E8 43 E5 00 00        -  call Succubus_sword_ver_E100.exe+1FF50
+"Succubus_sword_ver_E100.exe"+11A0D: 8B 08                 -  mov ecx,[eax]
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>6</ID>
+          <Description>"MP"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_mp]+08</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>8</ID>
+          <Description>"HP"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_mp]-e8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>21</ID>
+          <Description>"Max HP (2 per heart)"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_mp]-e8-10</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>10</ID>
+          <Description>"Money (Ignore display)"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_mp]-b8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>11</ID>
+          <Description>"Keys"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_mp]-c8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>13</ID>
+          <Description>"tip pick"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_mp]-18</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>18</ID>
+          <Description>"hook rope"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_mp]-8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>15</ID>
+          <Description>"milk"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_mp]-a8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17</ID>
+          <Description>"clothes - 0 means rape -  pgup inc 1 -pgdwn dec"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_mp]-88</Address>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Increase Value</Action>
+              <Keys>
+                <Key>33</Key>
+              </Keys>
+              <Value>1</Value>
+              <ID>0</ID>
+            </Hotkey>
+            <Hotkey>
+              <Action>Decrease Value</Action>
+              <Keys>
+                <Key>34</Key>
+              </Keys>
+              <Value>1</Value>
+              <ID>1</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>22</ID>
+          <Description>"Iron"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_mp]-18+b0-20</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>19</ID>
+          <Description>"mithril"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_mp]-18+b0</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>20</ID>
+          <Description>"s-meter - 30 breaks out - end break"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_mp]-18+b0+2f0</Address>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>35</Key>
+              </Keys>
+              <Value>30</Value>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_marker</Name>
+      <Address>03600000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_magic</Name>
+      <Address>03600010</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_hp</Name>
+      <Address>02DB0000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_thisdick</Name>
+      <Address>02E30000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_mp</Name>
+      <Address>033A0000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+  <Comments>hp - 4bytes - as is
+</Comments>
+</CheatTable>

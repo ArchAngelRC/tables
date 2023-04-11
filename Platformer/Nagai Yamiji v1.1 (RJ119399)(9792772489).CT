@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="31">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>32</ID>
+      <Description>"find base"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Game   : NY Reboot JP.exe
+// Version:
+// Date   :
+// Author : LustWolf
+//ECX+10
+// #100000 - sbar
+// #100019 - hp
+// #100078 - sex timer
+// #100093 - enemy h delay. 0 allowed , somewhere around 50 not allowed
+// #0    - magic
+
+[ENABLE]
+aobscan(aob_sbar_read,DD 47 08 DD 5B 08) 
+alloc(newmem,1024)
+globalalloc(_jumpCounter,8)
+_jumpCounter:
+  dq 0
+
+globalalloc(_marker2,8)
+_marker2:
+  dq 0
+globalalloc(_stimer,8)
+_stimer:
+  db 0
+globalalloc(_magic,8)
+_magic:
+  db 0
+globalalloc(_hp,8)
+_sbar:
+  db 0
+globalalloc(_sbar,8)
+_sbar:
+  db 0
+
+label(code)
+label(return)
+label(notsbar)
+label(nothp)
+label(notmagic)
+label(_filter)
+label(_jumpCounterFind)
+
+newmem:
+  pushf
+  cmp [ecx+10],#100000
+  jne notsbar
+  push ebx
+  lea ebx,[edi+08]
+  mov [_sbar],ebx
+  pop ebx
+  jmp code
+
+notsbar:
+  cmp [ecx+10],#100019
+  jne nothp
+  push ebx
+  lea ebx,[edi+08]
+  mov [_hp],ebx
+  pop ebx
+  jmp code
+
+nothp:
+  cmp [ecx+10],#0
+  jne notmagic
+  push ebx
+  lea ebx,[edi+08]
+  mov [_magic],ebx
+  pop ebx
+  jmp code
+
+notmagic:
+  cmp [ecx+10],#100078
+  jne _jumpCounterFind
+  //jne code
+  push ebx
+  lea ebx,[edi+08]
+  mov [_stimer],ebx
+  pop ebx
+  jmp code
+
+_filter:
+//popf
+
+je _jumpCounterFind
+
+mov [_marker2],_marker2
+  fld qword ptr [edi+08]
+  fstp qword ptr [ebx+08]
+  jmp return
+
+_jumpCounterFind:
+cmp [ecx+10],#100103
+jne code
+push ebx
+lea ebx,[edi+08]
+mov [_jumpCounter],ebx
+pop ebx
+jmp code
+
+code:
+  popf
+
+  fld qword ptr [edi+08]
+  fstp qword ptr [ebx+08]
+  jmp return
+
+aob_sbar_read:
+  jmp newmem
+  nop
+return:
+registersymbol(aob_sbar_read)
+
+[DISABLE]
+aob_sbar_read:
+  db DD 47 08 DD 5B 08
+
+unregistersymbol(aob_sbar_read)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 066D002C
+
+066D0002: 81 FB 40 F9 18 00  -  cmp ebx,0018F940
+066D0008: 0F 85 1C 00 00 00  -  jne 066D002A
+066D000E: 81 FA 68 B9 CF 06  -  cmp edx,06CFB968
+066D0014: 0F 85 10 00 00 00  -  jne 066D002A
+066D001A: 53                 -  push ebx
+066D001B: 8D 5F 08           -  lea ebx,[edi+08]
+066D001E: 89 1D 20 00 16 02  -  mov [_magic],ebx
+066D0024: 5B                 -  pop ebx
+066D0025: E9 00 00 00 00     -  jmp 066D002A
+066D002A: 66 9D              -  popf 
+// ---------- INJECTING HERE ----------
+066D002C: DD 47 08           -  fld qword ptr [edi+08]
+066D002F: DD 5B 08           -  fstp qword ptr [ebx+08]
+// ---------- DONE INJECTING  ----------
+066D0032: E9 6D 82 D3 F9     -  jmp "NY Reboot JP.exe"+82A4
+066D0037: 00 00              -  add [eax],al
+066D0039: 00 00              -  add [eax],al
+066D003B: 00 00              -  add [eax],al
+066D003D: 00 00              -  add [eax],al
+066D003F: 00 00              -  add [eax],al
+066D0041: 00 00              -  add [eax],al
+066D0043: 00 00              -  add [eax],al
+066D0045: 00 00              -  add [eax],al
+066D0047: 00 00              -  add [eax],al
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>33</ID>
+          <Description>"s bar (0-up, 3-knock down, 30-screwed) ins-toggle clip, pd-downed, pg up-up"</Description>
+          <VariableType>Double</VariableType>
+          <Address>[_sbar]</Address>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>34</Key>
+              </Keys>
+              <Value>3</Value>
+              <Description>knock down</Description>
+              <ID>0</ID>
+            </Hotkey>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>45</Key>
+              </Keys>
+              <ID>1</ID>
+            </Hotkey>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>45</Key>
+              </Keys>
+              <Value>.5</Value>
+              <ID>2</ID>
+            </Hotkey>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>33</Key>
+              </Keys>
+              <Value>0</Value>
+              <ID>3</ID>
+            </Hotkey>
+            <Hotkey>
+              <Action>Deactivate</Action>
+              <Keys>
+                <Key>33</Key>
+              </Keys>
+              <ID>4</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>37</ID>
+          <Description>"Sex Timer (300-fast, freeze 365 for instacum) end-freeze"</Description>
+          <VariableType>Double</VariableType>
+          <Address>[_stimer]</Address>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>35</Key>
+              </Keys>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>39</ID>
+          <Description>"Magic"</Description>
+          <VariableType>Double</VariableType>
+          <Address>[_magic]</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>34</ID>
+          <Description>"HP"</Description>
+          <VariableType>Double</VariableType>
+          <Address>[_hp]</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>55</ID>
+          <Description>"Jump Counter - 0 inf wall jumps after getting ability"</Description>
+          <VariableType>Double</VariableType>
+          <Address>[_jumpCounter]</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>42</ID>
+      <Description>"Find Char Movement"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Game   : NY Reboot JP.exe
+// Version:
+// Date   :
+// Author : LustWolf
+
+[ENABLE]
+aobscanmodule(aob_char_location_read,NY Reboot JP.exe,D9 46 5C 0F 5A C0 D9) 
+alloc(newmem,1024,NY Reboot JP.exe)
+globalalloc(_marker,8)
+_marker:
+  dq 0
+
+globalalloc(_lat,8)
+_lat:
+  dq 0 //dq used to take care of 64-bit apps too
+
+label(code)
+label(return)
+label(_filter)
+
+newmem:
+  pushf //uncomment if comparing
+  cmp [esi+30],0
+  jne _filter
+  mov [_lat],esi   //put address you're interested in seeing the value of here (Injection Copy)
+  
+  jmp _filter
+  //jmp code
+
+_filter:
+
+  popf //uncomment if comparing
+
+// below is original code
+mov [_marker],_marker// move in front of code line of interest to help find spot
+  fld dword ptr [esi+5C]
+  cvtps2pd xmm0,xmm0
+  jmp return
+//
+
+
+code:
+  popf //uncomment if comparing
+
+  fld dword ptr [esi+5C]
+  cvtps2pd xmm0,xmm0
+  jmp return
+
+aob_char_location_read:
+  jmp newmem
+  nop
+return:
+registersymbol(aob_char_location_read)
+
+[DISABLE]
+aob_char_location_read:
+  db D9 46 5C 0F 5A C0
+
+unregistersymbol(aob_char_location_read)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NY Reboot JP.exe"+761DF
+
+"NY Reboot JP.exe"+761BB: 85 FF                 -  test edi,edi
+"NY Reboot JP.exe"+761BD: 0F 84 B7 00 00 00     -  je "NY Reboot JP.exe"+7627A
+"NY Reboot JP.exe"+761C3: 8B F7                 -  mov esi,edi
+"NY Reboot JP.exe"+761C5: 85 FF                 -  test edi,edi
+"NY Reboot JP.exe"+761C7: 74 06                 -  je "NY Reboot JP.exe"+761CF
+"NY Reboot JP.exe"+761C9: 8B BF 0C 01 00 00     -  mov edi,[edi+0000010C]
+"NY Reboot JP.exe"+761CF: D9 46 58              -  fld dword ptr [esi+58]
+"NY Reboot JP.exe"+761D2: F3 0F 10 4E 34        -  movss xmm1,[esi+34]
+"NY Reboot JP.exe"+761D7: F3 0F 10 46 38        -  movss xmm0,[esi+38]
+"NY Reboot JP.exe"+761DC: D9 5E 68              -  fstp dword ptr [esi+68]
+// ---------- INJECTING HERE ----------
+"NY Reboot JP.exe"+761DF: D9 46 5C              -  fld dword ptr [esi+5C]
+"NY Reboot JP.exe"+761E2: 0F 5A C0              -  cvtps2pd xmm0,xmm0
+// ---------- DONE INJECTING  ----------
+"NY Reboot JP.exe"+761E5: D9 5E 6C              -  fstp dword ptr [esi+6C]
+"NY Reboot JP.exe"+761E8: 0F 5A C9              -  cvtps2pd xmm1,xmm1
+"NY Reboot JP.exe"+761EB: D9 86 D4 00 00 00     -  fld dword ptr [esi+000000D4]
+"NY Reboot JP.exe"+761F1: F2 0F 58 C1           -  addsd xmm0,xmm1
+"NY Reboot JP.exe"+761F5: 66 0F 5A C0           -  cvtpd2ps xmm0,xmm0
+"NY Reboot JP.exe"+761F9: D9 9E D8 00 00 00     -  fstp dword ptr [esi+000000D8]
+"NY Reboot JP.exe"+761FF: 8B CE                 -  mov ecx,esi
+"NY Reboot JP.exe"+76201: F3 0F 11 46 34        -  movss [esi+34],xmm0
+"NY Reboot JP.exe"+76206: F3 0F 11 44 24 14     -  movss [esp+14],xmm0
+"NY Reboot JP.exe"+7620C: E8 6F 9A FB FF        -  call "NY Reboot JP.exe"+2FC80
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>43</ID>
+          <Description>"Lat (up is lower)(Home toggle freeze), num . inc"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[_lat]+5c</Address>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>36</Key>
+              </Keys>
+              <ID>0</ID>
+            </Hotkey>
+            <Hotkey>
+              <Action>Decrease Value</Action>
+              <Keys>
+                <Key>110</Key>
+              </Keys>
+              <Value>50</Value>
+              <ID>1</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>45</ID>
+          <Description>"long (left is less)"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[_lat]+5c-4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>47</ID>
+          <Description>"Lighting"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_lat]+5c-4+f4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>49</ID>
+          <Description>"Character distortion"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[_lat]+5c-4-1c</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_hp</Name>
+      <Address>0C810040</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_points</Name>
+      <Address>0C810080</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_magic</Name>
+      <Address>0C810030</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_sbar</Name>
+      <Address>0C810050</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_sbartwo</Name>
+      <Address>09B10000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_stimer</Name>
+      <Address>0C810020</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_marker</Name>
+      <Address>0C810060</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_lat</Name>
+      <Address>0C810070</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_jumpCounter</Name>
+      <Address>0C810000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_marker2</Name>
+      <Address>0C810010</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+  <Comments>ECX offset 10 or 70 to distinguish values
+s bar (0-up, 3-knock down, 30-screwed)- 0.5 enemy can't touch you
+</Comments>
+</CheatTable>

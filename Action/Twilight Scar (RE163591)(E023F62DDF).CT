@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="32">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Find magic"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Game   : stdrt.exe
+// Version:
+// Date   :
+// Author : LustWolf
+//NOTES:
+// Note: when in 32 bit mode you should use PUSHFD and POPFD to manipulate the full 32 bits of the EFlags registry. 
+// Note: when in 64 bit mode you should use PUSHFQ and POPFQ to manipulate the full 32 bits of the EFlags registry.
+[ENABLE]
+aobscanmodule(aob_magic,stdrt.exe,39 72 08 0F 9F C0) 
+alloc(newmem,1024,stdrt.exe)
+globalalloc(_marker,8)
+_marker:
+  dq 0
+
+globalalloc(_magic,8)
+_magic:
+  dq 0 //dq used to take care of 64-bit apps too
+
+label(code)
+label(return)
+label(_filter)
+
+newmem:
+  pushfd //uncomment if comparing
+  cmp [edx+8],5
+  jg _filter
+  cmp [edx+8],0
+  je _filter
+  mov [_magic],edx   //put address you're interested in seeing the value of here (Injection Copy)
+  
+  jmp _filter
+  //jmp code
+
+_filter:
+
+  popfd //uncomment if comparing
+
+// below is original code
+mov [_marker],_marker// move in front of code line of interest to help find spot
+  cmp [edx+08],esi
+  setg al
+  jmp return
+//
+
+
+code:
+  //popfd //uncomment if comparing
+
+  cmp [edx+08],esi
+  setg al
+  jmp return
+
+aob_magic:
+  jmp newmem
+  nop
+return:
+registersymbol(aob_magic)
+
+[DISABLE]
+aob_magic:
+  db 39 72 08 0F 9F C0
+
+unregistersymbol(aob_magic)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: stdrt.exe+F7B7
+
+stdrt.exe+F780: 0F BF 06           - movsx eax,word ptr [esi]
+stdrt.exe+F783: 0F BF 56 04        - movsx edx,word ptr [esi+04]
+stdrt.exe+F787: 03 F0              - add esi,eax
+stdrt.exe+F789: E8 12 5B FF FF     - call stdrt.exe+52A0
+stdrt.exe+F78E: 8B 76 0C           - mov esi,[esi+0C]
+stdrt.exe+F791: 8B D0              - mov edx,eax
+stdrt.exe+F793: 33 C0              - xor eax,eax
+stdrt.exe+F795: 8B 0A              - mov ecx,[edx]
+stdrt.exe+F797: 2B C8              - sub ecx,eax
+stdrt.exe+F799: 74 1C              - je stdrt.exe+F7B7
+stdrt.exe+F79B: 83 E9 02           - sub ecx,02
+stdrt.exe+F79E: 75 1D              - jne stdrt.exe+F7BD
+stdrt.exe+F7A0: F2 0F 10 42 08     - movsd xmm0,[edx+08]
+stdrt.exe+F7A5: 66 0F 6E CE        - movd xmm1,esi
+stdrt.exe+F7A9: F3 0F E6 C9        - cvtdq2pd xmm1,xmm1,xmm1
+stdrt.exe+F7AD: 5E                 - pop esi
+stdrt.exe+F7AE: 66 0F 2F C1        - comisd xmm0,xmm1
+stdrt.exe+F7B2: 0F 97 C0           - seta al
+stdrt.exe+F7B5: 5D                 - pop ebp
+stdrt.exe+F7B6: C3                 - ret 
+// ---------- INJECTING HERE ----------
+stdrt.exe+F7B7: 39 72 08           - cmp [edx+08],esi
+// ---------- DONE INJECTING  ----------
+stdrt.exe+F7BA: 0F 9F C0           - setg al
+stdrt.exe+F7BD: 5E                 - pop esi
+stdrt.exe+F7BE: 5D                 - pop ebp
+stdrt.exe+F7BF: C3                 - ret 
+stdrt.exe+F7C0: 55                 - push ebp
+stdrt.exe+F7C1: 8B EC              - mov ebp,esp
+stdrt.exe+F7C3: 8B 0D B4 B4 12 00  - mov ecx,[stdrt.exe+AB4B4]
+stdrt.exe+F7C9: 56                 - push esi
+stdrt.exe+F7CA: 8B 75 08           - mov esi,[ebp+08]
+stdrt.exe+F7CD: 83 C6 10           - add esi,10
+stdrt.exe+F7D0: 0F BF 06           - movsx eax,word ptr [esi]
+stdrt.exe+F7D3: 0F BF 56 04        - movsx edx,word ptr [esi+04]
+stdrt.exe+F7D7: 03 F0              - add esi,eax
+stdrt.exe+F7D9: E8 C2 5A FF FF     - call stdrt.exe+52A0
+stdrt.exe+F7DE: F2 0F 10 4E 0C     - movsd xmm1,[esi+0C]
+stdrt.exe+F7E3: 8B 08              - mov ecx,[eax]
+stdrt.exe+F7E5: 5E                 - pop esi
+stdrt.exe+F7E6: 83 E9 00           - sub ecx,00
+stdrt.exe+F7E9: 74 19              - je stdrt.exe+F804
+stdrt.exe+F7EB: 83 E9 02           - sub ecx,02
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"Magic (3 full)"</Description>
+          <VariableType>Byte</VariableType>
+          <Address>[_magic]+8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"timer 1000 is gameover prompt (very iffy)"</Description>
+          <VariableType>2 Bytes</VariableType>
+          <Address>[_magic]+28</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_marker</Name>
+      <Address>03600000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_magic</Name>
+      <Address>03600010</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+</CheatTable>

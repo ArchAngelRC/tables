@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="28">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Auto Assemble script"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Game   : stdrt.exe
+// Version:
+// Date   :
+// Author : LustWolf
+
+[ENABLE]
+aobscanmodule(aob_ammodec,stdrt.exe,58 02 00 00 0F BF C9 8B 44 88 FC 3B F0) 
+alloc(newmem,1024,stdrt.exe)
+globalalloc(_ammo,8)
+_ammo:
+  db 0
+
+label(code)
+label(return)
+
+newmem:
+  pushf
+  push ebx
+  lea ebx,[eax+ecx*4-04]
+  mov [_ammo],ebx   //put address you're interested in seeing the value of here
+  pop ebx
+  jmp code
+
+code:
+  popf
+
+  mov eax,[eax+ecx*4-04]
+  cmp esi,eax
+  jmp return
+
+aob_ammodec+07:
+  jmp newmem
+  nop
+return:
+registersymbol(aob_ammodec)
+
+[DISABLE]
+aob_ammodec+07:
+  db 8B 44 88 FC 3B F0
+
+unregistersymbol(aob_ammodec)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "stdrt.exe"+6A97
+
+"stdrt.exe"+6A73: 74 13                          -  je stdrt.exe+6A88
+"stdrt.exe"+6A75: 83 E8 02                       -  sub eax,02
+"stdrt.exe"+6A78: 74 04                          -  je stdrt.exe+6A7E
+"stdrt.exe"+6A7A: 33 F6                          -  xor esi,esi
+"stdrt.exe"+6A7C: EB 10                          -  jmp stdrt.exe+6A8E
+"stdrt.exe"+6A7E: F2 0F 2C B2 0A 02 00 00        -  cvttsd2si esi,[edx+0000020A]
+"stdrt.exe"+6A86: EB 06                          -  jmp stdrt.exe+6A8E
+"stdrt.exe"+6A88: 8B B2 0A 02 00 00              -  mov esi,[edx+0000020A]
+"stdrt.exe"+6A8E: 8B 87 58 02 00 00              -  mov eax,[edi+00000258]
+"stdrt.exe"+6A94: 0F BF C9                       -  movsx ecx,cx
+// ---------- INJECTING HERE ----------
+"stdrt.exe"+6A97: 8B 44 88 FC                    -  mov eax,[eax+ecx*4-04]
+"stdrt.exe"+6A9B: 3B F0                          -  cmp esi,eax
+// ---------- DONE INJECTING  ----------
+"stdrt.exe"+6A9D: 5E                             -  pop esi
+"stdrt.exe"+6A9E: 74 1A                          -  je stdrt.exe+6ABA
+"stdrt.exe"+6AA0: C7 82 02 02 00 00 00 00 00 00  -  mov [edx+00000202],00000000
+"stdrt.exe"+6AAA: 89 82 0A 02 00 00              -  mov [edx+0000020A],eax
+"stdrt.exe"+6AB0: B8 02 00 00 00                 -  mov eax,00000002
+"stdrt.exe"+6AB5: 5F                             -  pop edi
+"stdrt.exe"+6AB6: 5D                             -  pop ebp
+"stdrt.exe"+6AB7: C2 04 00                       -  ret 0004
+"stdrt.exe"+6ABA: 33 C0                          -  xor eax,eax
+"stdrt.exe"+6ABC: 5F                             -  pop edi
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"Ammo (245 is full, 255 empty)"</Description>
+          <VariableType>Byte</VariableType>
+          <Address>[_ammo]</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"Find armor, hp, and clothes"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Game   : stdrt.exe (paused)
+// Version:
+// Date   :
+// Author : 
+
+[ENABLE]
+aobscanmodule(aob_base,ibar.mfx,D9 86 C0 02 00 00 D9 9E)
+alloc(newmem,1024,ibar.mfx)
+globalalloc(_armor,8)
+globalalloc(_hp,8)
+globalalloc(_clothes,8)
+_clothes:
+  db 0
+_hp:
+  db 0
+_armor:
+  db 0
+
+label(code)
+label(hp)
+label(clothes)
+label(return)
+
+newmem:
+  pushf
+  cmp [esi+64],#16
+  jne hp
+  push ebx
+  lea ebx,[esi+2c0]
+  mov [_armor],ebx   //put address you're interested in seeing the value of here
+  pop ebx
+  jmp code
+
+hp:
+  push ebx
+  cmp [esi+64],#10
+  jne clothes
+  lea ebx,[esi+2c0]
+  mov [_hp],ebx
+  pop ebx
+  jmp code
+
+clothes:
+  push ebx
+  cmp [esi+64],#20
+  jne code
+  lea ebx,[esi+2c0]
+  mov [_clothes],ebx
+  pop ebx
+  jmp code
+
+code:
+  popf
+
+  fld dword ptr [esi+000002C0]
+  jmp return
+
+aob_base:
+  jmp newmem
+  nop
+return:
+registersymbol(aob_base)
+
+[DISABLE]
+aob_base:
+  db D9 86 C0 02 00 00
+
+unregistersymbol(aob_base)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "ibar.mfx"+206A
+
+"ibar.mfx"+2047: D9 E0              -  fchs 
+"ibar.mfx"+2049: D9 5D 08           -  fstp dword ptr [ebp+08]
+"ibar.mfx"+204C: D9 86 C4 02 00 00  -  fld dword ptr [esi+000002C4]
+"ibar.mfx"+2052: D8 45 08           -  fadd dword ptr [ebp+08]
+"ibar.mfx"+2055: D9 86 C0 02 00 00  -  fld dword ptr [esi+000002C0]
+"ibar.mfx"+205B: D8 D9              -  fcomp st(0),st(1)
+"ibar.mfx"+205D: DF E0              -  fnstsw ax
+"ibar.mfx"+205F: F6 C4 41           -  test ah,41
+"ibar.mfx"+2062: 0F 85 BB 00 00 00  -  jne ibar.mfx+2123
+"ibar.mfx"+2068: DD D8              -  fstp st(0)
+// ---------- INJECTING HERE ----------
+"ibar.mfx"+206A: D9 86 C0 02 00 00  -  fld dword ptr [esi+000002C0]
+// ---------- DONE INJECTING  ----------
+"ibar.mfx"+2070: D9 9E C4 02 00 00  -  fstp dword ptr [esi+000002C4]
+"ibar.mfx"+2076: 8B 7E 08           -  mov edi,[esi+08]
+"ibar.mfx"+2079: 53                 -  push ebx
+"ibar.mfx"+207A: FF 37              -  push [edi]
+"ibar.mfx"+207C: 89 7D D4           -  mov [ebp-2C],edi
+"ibar.mfx"+207F: FF 15 10 E1 2A 00  -  call dword ptr [ibar.mfx+E110]
+"ibar.mfx"+2085: 89 45 D0           -  mov [ebp-30],eax
+"ibar.mfx"+2088: 8B 86 A4 02 00 00  -  mov eax,[esi+000002A4]
+"ibar.mfx"+208E: 89 45 D8           -  mov [ebp-28],eax
+"ibar.mfx"+2091: 8B 86 A8 02 00 00  -  mov eax,[esi+000002A8]
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>6</ID>
+          <Description>"Armor (100 full)"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[_armor]</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>7</ID>
+          <Description>"Blue Bar (100 full)(End = toggle freeze)"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[_hp]</Address>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>35</Key>
+              </Keys>
+              <Description>Toggle blue bar freeze</Description>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>8</ID>
+          <Description>"Clothes (100 full)(page up=clothes on)"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[_clothes]</Address>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>33</Key>
+              </Keys>
+              <Value>100</Value>
+              <ID>0</ID>
+            </Hotkey>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>33</Key>
+              </Keys>
+              <ID>1</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_ammo</Name>
+      <Address>03520000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_armor</Name>
+      <Address>03520010</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_hp</Name>
+      <Address>03520020</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_clothes</Name>
+      <Address>03520030</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+</CheatTable>

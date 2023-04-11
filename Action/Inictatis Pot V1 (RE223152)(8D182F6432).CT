@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="31">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"find hp (populates when hit)"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Game   : Game.exe
+// Version:
+// Date   :
+// Author : LustWolf
+
+[ENABLE]
+aobscanmodule(aob_base,Game.exe,89 0A E9 1C 05 00 00) 
+alloc(newmem,1024,Game.exe)
+globalalloc(_hp,8)
+_hp:
+  db 0
+
+label(code)
+label(return)
+
+newmem:
+  pushf
+  cmp [eax+38],#20 //try if fail [eax],0  je code
+  jne code
+  mov [_hp],eax   //put address you're interested in seeing the value of here
+  
+  jmp code
+
+code:
+  popf
+
+  mov [edx],ecx
+  jmp Game.exe+31C2F
+  jmp return
+
+aob_base:
+  jmp newmem
+  nop
+  nop
+return:
+registersymbol(aob_base)
+
+[DISABLE]
+aob_base:
+  db 89 0A E9 1C 05 00 00
+
+unregistersymbol(aob_base)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "Game.exe"+3170C
+
+"Game.exe"+316E7: 6A 02              -  push 02
+"Game.exe"+316E9: 8B 4D D0           -  mov ecx,[ebp-30]
+"Game.exe"+316EC: 8B 89 8C 08 00 00  -  mov ecx,[ecx+0000088C]
+"Game.exe"+316F2: 83 C1 44           -  add ecx,44
+"Game.exe"+316F5: E8 06 D1 06 00     -  call Game.exe+9E800
+"Game.exe"+316FA: 8B 10              -  mov edx,[eax]
+"Game.exe"+316FC: 8B 85 74 FF FF FF  -  mov eax,[ebp-0000008C]
+"Game.exe"+31702: 8B 08              -  mov ecx,[eax]
+"Game.exe"+31704: 2B 0A              -  sub ecx,[edx]
+"Game.exe"+31706: 8B 95 74 FF FF FF  -  mov edx,[ebp-0000008C]
+// ---------- INJECTING HERE ----------
+"Game.exe"+3170C: 89 0A              -  mov [edx],ecx
+"Game.exe"+3170E: E9 1C 05 00 00     -  jmp Game.exe+31C2F
+// ---------- DONE INJECTING  ----------
+"Game.exe"+31713: 6A 01              -  push 01
+"Game.exe"+31715: 8B 45 D0           -  mov eax,[ebp-30]
+"Game.exe"+31718: 8B 88 8C 08 00 00  -  mov ecx,[eax+0000088C]
+"Game.exe"+3171E: 83 C1 34           -  add ecx,34
+"Game.exe"+31721: E8 DA D0 06 00     -  call Game.exe+9E800
+"Game.exe"+31726: 8B 08              -  mov ecx,[eax]
+"Game.exe"+31728: 51                 -  push ecx
+"Game.exe"+31729: 6A 01              -  push 01
+"Game.exe"+3172B: 8B 55 D0           -  mov edx,[ebp-30]
+"Game.exe"+3172E: 8B 8A 8C 08 00 00  -  mov ecx,[edx+0000088C]
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"hp"</Description>
+          <LastState Value="279" RealAddress="0F244378"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>6</ID>
+          <Description>"ep"</Description>
+          <LastState Value="4" RealAddress="0F24437C"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>8</ID>
+          <Description>"sleep 0-awake (press end to sleep)"</Description>
+          <LastState Value="0" RealAddress="0F2443D0"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+58</Address>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>35</Key>
+              </Keys>
+              <Value>6</Value>
+              <Description>sleep</Description>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>10</ID>
+          <Description>"gold"</Description>
+          <LastState Value="11785" RealAddress="0F244390"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+18</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>16</ID>
+          <Description>"experience"</Description>
+          <LastState Value="117591" RealAddress="0F244384"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+c</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17</ID>
+          <Description>"Lv"</Description>
+          <LastState Value="29" RealAddress="0F2443A8"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+30</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>19</ID>
+          <Description>"Atk (best to freeze at desired lvl)"</Description>
+          <LastState Value="34" RealAddress="0F244388"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[_hp]+10</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_hp</Name>
+      <Address>0DA00000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_everything</Name>
+      <Address>03BF0010</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+  <Comments>once sleep button is pressed, try to walk or attack to activate the mode
+</Comments>
+</CheatTable>

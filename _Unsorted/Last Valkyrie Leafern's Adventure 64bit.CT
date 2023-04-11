@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>26</ID>
+      <Description>"Find Addresses (See Comments)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : leafeln.exe
+  Version: 
+  Date   : 2017-11-10
+  Author : LustWolf
+
+  -Tested on exe with SHA-1: 37C17FED44A55EE232C0BD64390D1391C0883A61
+  -Enable Japanese Locale for it to work properly
+  -YMMV
+}
+
+[ENABLE]
+
+aobscan(playerbasetwo,02 00 00 49 63 46 60 F2 0F 2A C0) // should be unique
+alloc(newmem,$1000,03C43E7A)
+globalalloc(healthaddy,8)
+globalalloc(crystaladdy,8)
+
+label(code)
+label(return)
+label(healthAddress)
+
+newmem:
+  pushf
+  cmp [r14+74],0
+  je healthAddress
+  mov [crystaladdy],r14
+  //mov [r14+60],#8 // move 8 into crystal and boss health
+  jmp code
+
+healthAddress:
+  //push r13 // setup var
+  //mov r13,[r14+5C] // setup var
+  //mov [r14+60],r13 // put max hp into current HP
+  //pop r13
+  mov [healthaddy],r14
+  jmp code
+
+code:
+  popf
+  movsxd  rax,dword ptr [r14+60]
+  cvtsi2sd xmm0,eax
+  jmp return
+
+playerbasetwo+03:
+  jmp newmem
+  nop
+  nop
+  nop
+return:
+registersymbol(playerbasetwo)
+
+[DISABLE]
+
+playerbasetwo+03:
+  db 49 63 46 60 F2 0F 2A C0
+
+unregistersymbol(playerbasetwo)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 03C43E7A
+
+""+3C43E54: 48 83 C4 20                    -  add rsp,20
+""+3C43E58: 4C 8B F0                       -  mov r14,rax
+""+3C43E5B: 4D 85 F6                       -  test r14,r14
+""+3C43E5E: 74 1A                          -  je 03C43E7A
+""+3C43E60: 49 8B 06                       -  mov rax,[r14]
+""+3C43E63: 48 8B 00                       -  mov rax,[rax]
+""+3C43E66: 48 8B 40 10                    -  mov rax,[rax+10]
+""+3C43E6A: 48 8B 40 28                    -  mov rax,[rax+28]
+""+3C43E6E: 48 3D 68 53 2E 17              -  cmp rax,172E5368
+""+3C43E74: 0F 85 57 02 00 00              -  jne 03C440D1
+// ---------- INJECTING HERE ----------
+""+3C43E7A: 49 63 46 60                    -  movsxd  rax,dword ptr [r14+60]
+""+3C43E7E: F2 0F 2A C0                    -  cvtsi2sd xmm0,eax
+// ---------- DONE INJECTING  ----------
+""+3C43E82: F2 44 0F 5A F8                 -  cvtsd2ss xmm15,xmm0
+""+3C43E87: F3 44 0F 11 7D CC              -  movss [rbp-34],xmm15
+""+3C43E8D: F3 0F 10 45 CC                 -  movss xmm0,[rbp-34]
+""+3C43E92: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+""+3C43E96: F2 0F 11 45 C0                 -  movsd [rbp-40],xmm0
+""+3C43E9B: 48 8B 46 20                    -  mov rax,[rsi+20]
+""+3C43E9F: 48 8B C8                       -  mov rcx,rax
+""+3C43EA2: BA 20 33 BB 05                 -  mov edx,05BB3320
+""+3C43EA7: 48 83 EC 20                    -  sub rsp,20
+""+3C43EAB: 83 38 00                       -  cmp dword ptr [rax],00
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>16</ID>
+          <Description>"health"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[healthaddy]+60</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>20</ID>
+          <Description>"Magic"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[healthaddy]+78</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>31</ID>
+          <Description>"Coins"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[healthaddy]+44</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>27</ID>
+          <Description>"crystal / boss"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[crystaladdy]+60</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>29</ID>
+          <Description>"XP"</Description>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>28</ID>
+              <Description>"XP needed till next level"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[healthaddy]+4c</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>30</ID>
+              <Description>"current XP"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[healthaddy]+48</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>32</ID>
+              <Description>"Attack"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[healthaddy]+88</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>35</ID>
+      <Description>"Remove Censor (Activates after grab)"</Description>
+      <Options moActivateChildrenAsWell="1"/>
+      <LastState Value="" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>33</ID>
+          <Description>"Mosaic init"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : leafeln.exe
+  Version:
+  Date   : 2017-11-10
+  Author : LustWolf
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(mosaicone,55 48 8B EC 56 41 54 41 55 41 56 41 57) // should be unique
+alloc(newmem,$1000,03C16F40)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  ret
+  push rbp
+  mov rbp,rsp
+  push rsi
+  jmp return
+
+mosaicone:
+  jmp newmem
+return:
+registersymbol(mosaicone)
+
+[DISABLE]
+
+mosaicone:
+  db 55 48 8B EC 56
+
+unregistersymbol(mosaicone)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 03C16F40
+
+""+3C16F25: 00 00                          -  add [rax],al
+""+3C16F27: 00 00                          -  add [rax],al
+""+3C16F29: 00 00                          -  add [rax],al
+""+3C16F2B: 00 81 00 00 00 94              -  add [rcx-6C000000],al
+""+3C16F31: 00 00                          -  add [rax],al
+""+3C16F33: 00 01                          -  add [rcx],al
+""+3C16F35: 04 03                          -  add al,03
+""+3C16F37: 05 00 00 04 53                 -  add eax,53040000
+""+3C16F3C: 01 50 00                       -  add [rax+00],edx
+""+3C16F3F: 00 55                          - db 00 55  // SHORTENED TO HIT INJECTION FROM:  add [rbp+48],dl
+// ---------- INJECTING HERE ----------
+""+3C16F41: 48 8B EC                       -  mov rbp,rsp
+""+3C16F44: 56                             -  push rsi
+// ---------- DONE INJECTING  ----------
+""+3C16F45: 41 54                          -  push r12
+""+3C16F47: 41 55                          -  push r13
+""+3C16F49: 41 56                          -  push r14
+""+3C16F4B: 41 57                          -  push r15
+""+3C16F4D: 48 81 EC C8 00 00 00           -  sub rsp,000000C8
+""+3C16F54: 48 8B F1                       -  mov rsi,rcx
+""+3C16F57: 48 83 EC 20                    -  sub rsp,20
+""+3C16F5B: 49 BB E2 93 BC 03 00 00 00 00  -  mov r11,0000000003BC93E2
+""+3C16F65: 41 FF D3                       -  call r11
+""+3C16F68: 48 83 C4 20                    -  add rsp,20
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>34</ID>
+          <Description>"Mosaic Update"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : leafeln.exe
+  Version:
+  Date   : 2017-11-10
+  Author : LustWolf
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(mosaicup,48 83 EC 08 48 89 0C 24 F3 * * * * * * * f3 0f5a c0 48 8B 04 24 F2 44 0F 5A F8 F3 44 0F 11 78 38 48 83 C4 08 C3) // should be unique
+alloc(newmem,$1000,03C17A40)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  ret
+  sub rsp,08
+  mov [rsp],rcx
+  jmp return
+
+mosaicup:
+  jmp newmem
+  nop
+  nop
+  nop
+return:
+registersymbol(mosaicup)
+
+[DISABLE]
+
+mosaicup:
+  db 48 83 EC 08 48 89 0C 24
+
+unregistersymbol(mosaicup)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 03C17A40
+
+""+3C17A24: 01 50 00                          -  add [rax+00],edx
+""+3C17A27: 00 E8                             -  add al,ch
+""+3C17A29: D3 85 B4 FF 04 80                 -  rol [rbp-7FFB004C],cl
+""+3C17A2F: 16                                -  push ss
+""+3C17A30: 69 19 00 00 00 00                 -  imul ebx,[rcx],00000000
+""+3C17A36: 00 00                             -  add [rax],al
+""+3C17A38: 00 00                             -  add [rax],al
+""+3C17A3A: 00 00                             -  add [rax],al
+""+3C17A3C: 00 00                             -  add [rax],al
+""+3C17A3E: 00 00                             -  add [rax],al
+// ---------- INJECTING HERE ----------
+""+3C17A40: 48 83 EC 08                       -  sub rsp,08
+""+3C17A44: 48 89 0C 24                       -  mov [rsp],rcx
+// ---------- DONE INJECTING  ----------
+""+3C17A48: F3 0F 10 05 20 00 00 00           -  movss xmm0,[MosaicField:Update+30]
+""+3C17A50: F3 0F 5A C0                       -  cvtss2sd xmm0,xmm0
+""+3C17A54: 48 8B 04 24                       -  mov rax,[rsp]
+""+3C17A58: F2 44 0F 5A F8                    -  cvtsd2ss xmm15,xmm0
+""+3C17A5D: F3 44 0F 11 78 38                 -  movss [rax+38],xmm15
+""+3C17A63: 48 83 C4 08                       -  add rsp,08
+""+3C17A67: C3                                -  ret
+""+3C17A68: 00 00                             -  add [rax],al
+""+3C17A6A: 00 00                             -  add [rax],al
+""+3C17A6C: 41 FF D3                          -  call r11
+}
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>magicbase</Name>
+      <Address>00490000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>magicnumberbase</Name>
+      <Address>003A0000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>hpaddy</Name>
+      <Address>00490010</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>playerhp</Name>
+      <Address>076C0000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>playerhpbar</Name>
+      <Address>05230000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>healthaddy</Name>
+      <Address>02DC0000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>crystaladdy</Name>
+      <Address>02DC0010</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+  <Comments>-Keeping the Health and Crystal/Boss values frozen between choosing levels may crash game
+</Comments>
+</CheatTable>
